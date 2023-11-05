@@ -33,15 +33,6 @@
       "path": "lang/fr.json"
     }
   ],
-  "relationships": {
-    "requires": [
-      {
-        "id": "babele",
-        "type": "module",
-        "compatibility": {}
-      }
-    ]
-  },
   "url": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator",
   "manifest": "https://raw.githubusercontent.com/DjLeChuck/foundryvtt-babele-translation-files-generator/main/module.json",
   "download": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/archive/0.0.1-dev.zip",
