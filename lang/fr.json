@@ -1,5 +1,4 @@
 {
-  "BTFG.Global.SelectedCompendium": "Compendium sélectionné :",
   "BTFG.CompendiumChooser.Title": "Sélecteur de compendium",
   "BTFG.CompendiumChooser.NotCompendium": "Vous ne pouvez déposer que des compendiums.",
   "BTFG.CompendiumChooser.ProcessSelection": "Traiter la sélection",
@@ -9,6 +8,8 @@
   "BTFG.CompendiumExporter.Title": "Exporteur de compendium",
   "BTFG.CompendiumExporter.NoCompendiumId": "Aucun ID de compendium fourni.",
   "BTFG.CompendiumExporter.CompendiumNotFound": "Aucun compendium avec l’ID {id}",
+  "BTFG.CompendiumExporter.SelectedCompendium": "Compendium sélectionné :",
+  "BTFG.CompendiumExporter.CompendiumIndexSize": "{size} documents",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Trier les entrées par ordre alphabétique",
   "BTFG.CompendiumExporter.GenerateFile": "Générer le fichier de traduction",
   "BTFG.ExporterInstanciator.InvalidCompendium": "Impossible de créer un exporteur pour le compendium {label}",

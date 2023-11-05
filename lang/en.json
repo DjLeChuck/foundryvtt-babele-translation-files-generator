@@ -1,5 +1,4 @@
 {
-  "BTFG.Global.SelectedCompendium": "Selected compendium:",
   "BTFG.CompendiumChooser.Title": "Compendium chooser",
   "BTFG.CompendiumChooser.NotCompendium": "You can only drop a compendium.",
   "BTFG.CompendiumChooser.ProcessSelection": "Process selection",
@@ -9,6 +8,8 @@
   "BTFG.CompendiumExporter.Title": "Compendium exporter",
   "BTFG.CompendiumExporter.NoCompendiumId": "No compendium ID provided.",
   "BTFG.CompendiumExporter.CompendiumNotFound": "No compendium with ID {id}",
+  "BTFG.CompendiumExporter.SelectedCompendium": "Selected compendium:",
+  "BTFG.CompendiumExporter.CompendiumIndexSize": "{size} documents",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
   "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {label}",

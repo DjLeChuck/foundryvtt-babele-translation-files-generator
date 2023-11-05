@@ -1,6 +1,11 @@
 <h1>{{localize "BTFG.CompendiumExporter.Title"}}</h1>
 
-<p>{{localize "BTFG.Global.SelectedCompendium"}} <strong>{{pack.metadata.label}}</strong></p>
+<p>
+  {{localize "BTFG.CompendiumExporter.SelectedCompendium"}}
+  <strong>{{log pack}}
+    {{pack.metadata.label}} ({{localize "BTFG.CompendiumExporter.CompendiumIndexSize" size=pack.index.size}})
+  </strong>
+</p>
 
 <form class="flexcol">
   <div class="form-group">

@@ -1,9 +1,11 @@
-import { ItemExporter } from './item-exporter.mjs';
+import { ActorExporter } from './actor-exporter.mjs';
 import { CardsExporter } from './cards-exporter.mjs';
+import { ItemExporter } from './item-exporter.mjs';
 
 const EXPORTERS = {
-  Item: ItemExporter,
+  Actor: ActorExporter,
   Cards: CardsExporter,
+  Item: ItemExporter,
 };
 
 export class ExporterInstanciator {
