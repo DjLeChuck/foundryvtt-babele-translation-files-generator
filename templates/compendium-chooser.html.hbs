@@ -1,0 +1,19 @@
+<div>
+  <h1>Compendium chooser</h1>
+
+  {{#if pack}}
+    <p>Current selection: <strong>{{pack.metadata.label}}</strong></p>
+
+    <p class="flexrow">
+      <button type="button" data-process>Process selection</button>
+      <button type="button" data-cancel>Cancel selection</button>
+    </p>
+  {{/if}}
+  {{#unless pack}}
+    <p>Choose the compendium to process by droping it from the compendium list to the area below.</p>
+
+    <div class="drop-zone">
+      <p>Drop your compendium in this area</p>
+    </div>
+  {{/unless}}
+</div>

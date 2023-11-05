@@ -1,0 +1,54 @@
+{
+  "id": "babele-translation-files-generator",
+  "title": "Translation files generator for Babele",
+  "description": "Generate translation file for Babele by selecting a valid Document.",
+  "authors": [
+    {
+      "name": "DjLeChuck",
+      "email": "djlechuck@gmail.com",
+      "url": "https://github.com/djlechuck/",
+      "flags": {}
+    }
+  ],
+  "version": "0.0.1-dev",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "esmodules": [
+    "assets/js/btfg.js"
+  ],
+  "styles": [
+    "assets/css/btfg.css"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "babele",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
+  "url": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator",
+  "manifest": "https://raw.githubusercontent.com/DjLeChuck/foundryvtt-babele-translation-files-generator/main/module.json",
+  "download": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/archive/0.0.1-dev.zip",
+  "bugs": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/issues",
+  "changelog": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/blob/main/CHANGELOG.md",
+  "license": "./LICENSE",
+  "readme": "./README.md",
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "hbs",
+        "json"
+      ],
+      "paths": [
+        "lang/",
+        "assets/",
+        "templates/"
+      ]
+    }
+  }
+}
