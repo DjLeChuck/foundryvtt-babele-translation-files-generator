@@ -1,9 +1,11 @@
 import { ActorExporter } from './actor-exporter.mjs';
+import { AdventureExporter } from './adventure-exporter.mjs';
 import { CardsExporter } from './cards-exporter.mjs';
 import { ItemExporter } from './item-exporter.mjs';
 
 const EXPORTERS = {
   Actor: ActorExporter,
+  Adventure: AdventureExporter,
   Cards: CardsExporter,
   Item: ItemExporter,
 };
