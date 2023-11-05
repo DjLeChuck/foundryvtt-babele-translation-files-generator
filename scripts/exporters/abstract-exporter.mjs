@@ -22,7 +22,7 @@ export class AbstractExporter {
   }
 
   async export() {
-    ui.notifications.info(game.i18n.format('BTFG.Exporter.PleaseWait', { name: this.pack.metadata.name }));
+    ui.notifications.info(game.i18n.format('BTFG.Exporter.PleaseWait', { label: this.pack.metadata.label }));
 
     await this._processDataset();
 
@@ -33,7 +33,7 @@ export class AbstractExporter {
     this._downloadFile();
   }
 
-  _processDataset() {
+  async _processDataset() {
     throw new Error('You must implement this function');
   }
 

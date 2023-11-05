@@ -11,7 +11,7 @@
   "BTFG.CompendiumExporter.CompendiumNotFound": "No compendium with ID {id}",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
-  "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {name}",
-  "BTFG.Exporter.PleaseWait": "Processing compendium {name}. Please be patient, it can take a while depending on the data present inside.",
+  "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {label}",
+  "BTFG.Exporter.PleaseWait": "Processing compendium {label}. Please be patient, it can take a while depending on the data present inside.",
   "BTFG.Exporter.ExportFinished": "Export finished!"
 }

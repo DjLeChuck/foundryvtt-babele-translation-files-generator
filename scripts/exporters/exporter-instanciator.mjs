@@ -1,7 +1,9 @@
 import { ItemExporter } from './item-exporter.mjs';
+import { CardsExporter } from './cards-exporter.mjs';
 
 const EXPORTERS = {
   Item: ItemExporter,
+  Cards: CardsExporter,
 };
 
 export class ExporterInstanciator {
@@ -17,7 +19,7 @@ export class ExporterInstanciator {
       console.error(`[BTFG] Exporter creation error: ${err.toString()}`);
 
       ui.notifications.error(game.i18n.format('BTFG.ExporterInstanciator.InvalidCompendium', {
-        name: pack.metadata.name,
+        label: pack.metadata.label,
       }));
     }
   }
