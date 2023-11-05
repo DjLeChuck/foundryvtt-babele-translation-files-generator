@@ -6,6 +6,7 @@
   "BTFG.CompendiumChooser.Explaination": "Choisissez le compendium à traiter en le déposant depuis la liste des compendiums dans la zone ci-dessous.",
   "BTFG.CompendiumChooser.DropHere": "Déposer le compendium dans cette zone",
   "BTFG.CompendiumExporter.Title": "Exporteur de compendium",
+  "BTFG.CompendiumExporter.WarnBabeleActive": "Attention, l’export ne doit pas être lancé sur un compendium qui a été traduit par Babele car les données sources ne sont plus toutes accessible une fois qu’il a été initialisé.",
   "BTFG.CompendiumExporter.NoCompendiumId": "Aucun ID de compendium fourni.",
   "BTFG.CompendiumExporter.CompendiumNotFound": "Aucun compendium avec l’ID {id}",
   "BTFG.CompendiumExporter.SelectedCompendium": "Compendium sélectionné :",

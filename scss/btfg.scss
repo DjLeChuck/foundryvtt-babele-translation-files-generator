@@ -1,11 +1,22 @@
-.compendium-exporter-app .drop-zone {
-  width: 80%;
-  height: 60%;
-  border: 2px dashed #888;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: #eee;
+.compendium-exporter-app {
+  .drop-zone {
+    width: 80%;
+    height: 60%;
+    border: 2px dashed #888;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #eee;
+  }
+
+  .warn-babele {
+    color: #8b8000;
+    background-color: #ffffcc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #8b8000;
+  }
 }

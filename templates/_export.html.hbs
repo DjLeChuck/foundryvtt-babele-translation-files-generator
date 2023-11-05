@@ -1,5 +1,9 @@
 <h1>{{localize "BTFG.CompendiumExporter.Title"}}</h1>
 
+{{#if babeleActive}}
+  <p class="warn-babele">{{localize "BTFG.CompendiumExporter.WarnBabeleActive"}}</p>
+{{/if}}
+
 <p>
   {{localize "BTFG.CompendiumExporter.SelectedCompendium"}}
   <strong>{{log pack}}

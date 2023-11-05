@@ -23,6 +23,8 @@ export class CompendiumExporterApp extends FormApplication {
       context.pack = this._getPack();
     }
 
+    context.babeleActive = game?.babele?.initialized;
+
     return context;
   }
 
