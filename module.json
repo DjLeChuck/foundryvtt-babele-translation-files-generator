@@ -35,7 +35,7 @@
   ],
   "url": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator",
   "manifest": "https://raw.githubusercontent.com/DjLeChuck/foundryvtt-babele-translation-files-generator/main/module.json",
-  "download": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/archive/0.0.1-dev.zip",
+  "download": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/archive/refs/heads/main.zip",
   "bugs": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/issues",
   "changelog": "https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/blob/main/CHANGELOG.md",
   "license": "./LICENSE",
