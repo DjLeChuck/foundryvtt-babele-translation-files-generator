@@ -1,4 +1,5 @@
 import * as BTFG from '../const.mjs';
+import { CompendiumExporterApp } from './compendium-exporter-app.mjs';
 
 export class CompendiumChooserApp extends Application {
   packId = null;
@@ -59,6 +60,8 @@ export class CompendiumChooserApp extends Application {
   _onProcessChoice(e) {
     e.preventDefault();
 
-    // ...
+    (new CompendiumExporterApp({ packId: this.packId })).render(true);
+
+    this.close();
   }
 }
