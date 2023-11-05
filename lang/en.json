@@ -1,0 +1,17 @@
+{
+  "BTFG.Global.SelectedCompendium": "Selected compendium:",
+  "BTFG.CompendiumChooser.Title": "Compendium chooser",
+  "BTFG.CompendiumChooser.NotCompendium": "You can only drop a compendium.",
+  "BTFG.CompendiumChooser.ProcessSelection": "Process selection",
+  "BTFG.CompendiumChooser.CancelSelection": "Cancel selection",
+  "BTFG.CompendiumChooser.Explaination": "Choose the compendium to process by droping it from the compendium list to the area below.",
+  "BTFG.CompendiumChooser.DropHere": "Drop your compendium in this area",
+  "BTFG.CompendiumExporter.Title": "Compendium exporter",
+  "BTFG.CompendiumExporter.NoCompendiumId": "No compendium ID provided.",
+  "BTFG.CompendiumExporter.CompendiumNotFound": "No compendium with ID {id}",
+  "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
+  "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
+  "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {name}",
+  "BTFG.Exporter.PleaseWait": "Processing compendium {name}. Please be patient, it can take a while depending on the data present inside.",
+  "BTFG.Exporter.ExportFinished": "Export finished!"
+}

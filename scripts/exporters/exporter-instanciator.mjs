@@ -14,8 +14,11 @@ export class ExporterInstanciator {
     try {
       return new EXPORTERS[pack.metadata.type](pack, options);
     } catch (err) {
-      console.error(err);
-      ui.notifications.error(`Can not create exporter for the compendium ${pack.metadata.name}`);
+      console.error(`[BTFG] Exporter creation error: ${err.toString()}`);
+
+      ui.notifications.error(game.i18n.format('BTFG.ExporterInstanciator.InvalidCompendium', {
+        name: pack.metadata.name,
+      }));
     }
   }
 }

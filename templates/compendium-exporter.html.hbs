@@ -1,16 +1,16 @@
 <div>
-  <h1>Compendium exporter</h1>
+  <h1>{{localize "BTFG.CompendiumExporter.Title"}}</h1>
 
-  <p>Selected compendium: <strong>{{pack.metadata.label}}</strong></p>
+  <p>{{localize "BTFG.Global.SelectedCompendium"}} <strong>{{pack.metadata.label}}</strong></p>
 
   <form class="flexcol">
     <div class="form-group">
-      <label for="sortEntries">Sort entries alphabetically</label>
+      <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
       <input type="checkbox" value="1" id="sortEntries" name="sortEntries" />
     </div>
     <footer class="sheet-footer flexrow">
       <button type="submit" name="submit">
-        <i class="fa fa-check"></i> Generate translation file
+        <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}
       </button>
     </footer>
   </form>

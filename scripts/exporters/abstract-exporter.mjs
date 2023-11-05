@@ -22,7 +22,7 @@ export class AbstractExporter {
   }
 
   async export() {
-    ui.notifications.info(`Processing compendium ${this.pack.metadata.name}. Please be patient, it can take a while depending on the data present inside.`);
+    ui.notifications.info(game.i18n.format('BTFG.Exporter.PleaseWait', { name: this.pack.metadata.name }));
 
     await this._processDataset();
 
@@ -38,7 +38,7 @@ export class AbstractExporter {
   }
 
   _downloadFile() {
-    ui.notifications.info('Export finished!');
+    ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
     saveDataToFile(JSON.stringify(this.dataset, null, 2), 'text/json', `${this.pack.metadata.id}.json`);
   }

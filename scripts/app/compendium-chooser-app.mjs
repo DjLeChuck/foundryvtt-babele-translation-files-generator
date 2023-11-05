@@ -7,7 +7,7 @@ export class CompendiumChooserApp extends Application {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'compendium-chooser',
-      title: 'Compendium Chooser',
+      title: game.i18n.localize('BTFG.CompendiumChooser.Title'),
       template: `modules/${BTFG.MODULE_ID}/templates/compendium-chooser.html.hbs`,
       classes: [BTFG.MODULE_ID, 'compendium-chooser-app'],
       width: 600,
@@ -39,7 +39,7 @@ export class CompendiumChooserApp extends Application {
     const data = TextEditor.getDragEventData(e);
 
     if (!data || 'Compendium' !== data?.type) {
-      ui.notifications.error('You can only drop a compendium.');
+      ui.notifications.error(game.i18n.localize('BTFG.CompendiumChooser.NotCompendium'));
 
       return;
     }

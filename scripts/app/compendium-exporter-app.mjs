@@ -6,21 +6,23 @@ export class CompendiumExporterApp extends FormApplication {
     super(options);
 
     if (!options.packId) {
-      ui.notifications.error('No compendium ID provided.');
+      ui.notifications.error(game.i18n.localize('BTFG.CompendiumExporter.NoCompendiumId'));
 
       return;
     }
 
     this.pack = game.packs.get(options.packId);
     if (!this.pack) {
-      ui.notifications.error(`No compendium with ID ${options.packId}.`);
+      ui.notifications.error(game.i18n.format('BTFG.CompendiumExporter.CompendiumNotFound', {
+        id: options.packId,
+      }));
     }
   }
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'compendium-exporter',
-      title: 'Compendium exporter',
+      title: game.i18n.localize('BTFG.CompendiumExporter.Title'),
       template: `modules/${BTFG.MODULE_ID}/templates/compendium-exporter.html.hbs`,
       classes: [BTFG.MODULE_ID, 'compendium-exporter-app'],
       width: 600,
