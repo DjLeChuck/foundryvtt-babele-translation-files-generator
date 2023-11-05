@@ -1,7 +1,7 @@
 {
   "id": "babele-translation-files-generator",
   "title": "Translation files generator for Babele",
-  "description": "Generate translation file for Babele by selecting a valid Document.",
+  "description": "Generate translation file for Babele by selecting a valid Compendium.",
   "authors": [
     {
       "name": "DjLeChuck",
