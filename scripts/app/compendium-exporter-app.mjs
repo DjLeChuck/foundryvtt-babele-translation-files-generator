@@ -2,22 +2,7 @@ import * as BTFG from '../const.mjs';
 import { ExporterInstanciator } from '../exporters/exporter-instanciator.mjs';
 
 export class CompendiumExporterApp extends FormApplication {
-  constructor(options = {}) {
-    super(options);
-
-    if (!options.packId) {
-      ui.notifications.error(game.i18n.localize('BTFG.CompendiumExporter.NoCompendiumId'));
-
-      return;
-    }
-
-    this.pack = game.packs.get(options.packId);
-    if (!this.pack) {
-      ui.notifications.error(game.i18n.format('BTFG.CompendiumExporter.CompendiumNotFound', {
-        id: options.packId,
-      }));
-    }
-  }
+  packId = null;
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -27,22 +12,81 @@ export class CompendiumExporterApp extends FormApplication {
       classes: [BTFG.MODULE_ID, 'compendium-exporter-app'],
       width: 600,
       height: 400,
+      dragDrop: [{ dragSelector: null, dropSelector: '.drop-zone' }],
     });
   }
 
   getData(options = {}) {
     const context = super.getData(options);
 
-    context.pack = this.pack;
+    if (this.packId) {
+      context.pack = this._getPack();
+    }
 
     return context;
   }
 
-  async _updateObject(e, formData) {
-    const exporter = ExporterInstanciator.createForPack(this.pack, formData);
+  activateListeners(html) {
+    super.activateListeners(html);
 
-    await exporter.export();
+    html.find('[data-cancel]').click(this._onCancelChoice.bind(this));
+  }
+
+  _onDrop(e) {
+    e.preventDefault();
+
+    const data = TextEditor.getDragEventData(e);
+
+    if (!data || 'Compendium' !== data?.type) {
+      ui.notifications.error(game.i18n.localize('BTFG.CompendiumChooser.NotCompendium'));
+
+      return;
+    }
+
+    this.packId = data.id;
+
+    this.render();
+  }
+
+  _onCancelChoice(e) {
+    e.preventDefault();
+
+    this.packId = null;
+
+    this.render();
+  }
+
+  async _updateObject(e, formData) {
+    const pack = this._getPack();
+    if (null !== pack) {
+      const exporter = ExporterInstanciator.createForPack(pack, formData);
+
+      await exporter.export();
+    }
 
     return Promise.resolve(undefined);
+  }
+
+  /**
+   * @returns {CompendiumCollection|null}
+   * @private
+   */
+  _getPack() {
+    if (!this.packId) {
+      ui.notifications.error(game.i18n.localize('BTFG.CompendiumExporter.NoCompendiumId'));
+
+      return null;
+    }
+
+    const pack = game.packs.get(this.packId);
+    if (!pack) {
+      ui.notifications.error(game.i18n.format('BTFG.CompendiumExporter.CompendiumNotFound', {
+        id: this.packId,
+      }));
+
+      return null;
+    }
+
+    return pack;
   }
 }

@@ -1,17 +1,8 @@
 <div>
-  <h1>{{localize "BTFG.CompendiumExporter.Title"}}</h1>
-
-  <p>{{localize "BTFG.Global.SelectedCompendium"}} <strong>{{pack.metadata.label}}</strong></p>
-
-  <form class="flexcol">
-    <div class="form-group">
-      <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
-      <input type="checkbox" value="1" id="sortEntries" name="sortEntries" />
-    </div>
-    <footer class="sheet-footer flexrow">
-      <button type="submit" name="submit">
-        <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}
-      </button>
-    </footer>
-  </form>
+  {{#unless pack}}
+    {{> (template "_choose.html.hbs")}}
+  {{/unless}}
+  {{#if pack}}
+    {{> (template "_export.html.hbs")}}
+  {{/if}}
 </div>
