@@ -6,18 +6,39 @@
 
 <p>
   {{localize "BTFG.CompendiumExporter.SelectedCompendium"}}
-  <strong>{{log pack}}
+  <strong>
     {{pack.metadata.label}} ({{localize "BTFG.CompendiumExporter.CompendiumIndexSize" size=pack.index.size}})
   </strong>
 </p>
 
 <form class="flexcol">
+  <div>
+    <fieldset>
+      <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
+      <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
+      {{#each customMapping}}
+        <div class="form-group-stacked flexrow">
+          <div class="flexrow">
+            <input type="text" value="{{this.key}}" name="customMapping.{{@index}}.key" placeholder="customKey" />
+            <input type="text" value="{{this.value}}" name="customMapping.{{@index}}.value"
+                   placeholder="system.subData.customKey" />
+            <button type="button" data-remove-mapping="{{@index}}">
+              <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.RemoveCustomMapping"}}
+            </button>
+          </div>
+        </div>
+      {{/each}}
+      <button type="button" data-add-mapping>
+        <i class="fa fa-add"></i> {{localize "BTFG.CompendiumExporter.AddCustomMapping"}}
+      </button>
+    </fieldset>
+  </div>
   <div class="form-group">
     <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
-    <input type="checkbox" value="1" id="sortEntries" name="sortEntries" />
+    <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked sortEntries}} />
   </div>
   <footer class="sheet-footer flexrow">
-    <button type="submit" name="submit">
+    <button type="button" data-export>
       <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}
     </button>
     <button type="button" data-cancel>
