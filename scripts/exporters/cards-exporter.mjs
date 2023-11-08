@@ -2,7 +2,9 @@ import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class CardsExporter extends AbstractExporter {
   async _processDataset() {
-    const documents = await this.pack.getDocuments();
+    const documents = await this.pack.getIndex({
+      fields: ['cards._id', ...this.options.customMapping.map((mapping) => mapping.value)],
+    });
 
     documents.forEach(({ name, description, cards }) => {
       const cardsDataset = {};
