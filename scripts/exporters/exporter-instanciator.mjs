@@ -7,6 +7,7 @@ const EXPORTERS = {
   Item: exporters.ItemExporter,
   Macro: exporters.MacroExporter,
   Playlist: exporters.PlaylistExporter,
+  RollTable: exporters.RollTableExporter,
 };
 
 export class ExporterInstanciator {
