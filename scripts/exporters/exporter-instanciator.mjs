@@ -1,13 +1,11 @@
-import { ActorExporter } from './actor-exporter.mjs';
-import { AdventureExporter } from './adventure-exporter.mjs';
-import { CardsExporter } from './cards-exporter.mjs';
-import { ItemExporter } from './item-exporter.mjs';
+import * as exporters from './_index.mjs';
 
 const EXPORTERS = {
-  Actor: ActorExporter,
-  Adventure: AdventureExporter,
-  Cards: CardsExporter,
-  Item: ItemExporter,
+  Actor: exporters.ActorExporter,
+  Adventure: exporters.AdventureExporter,
+  Cards: exporters.CardsExporter,
+  Item: exporters.ItemExporter,
+  Macro: exporters.MacroExporter,
 };
 
 export class ExporterInstanciator {

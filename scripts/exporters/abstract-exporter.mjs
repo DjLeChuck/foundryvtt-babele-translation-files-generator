@@ -62,7 +62,8 @@ export class AbstractExporter {
   _downloadFile() {
     ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
-    saveDataToFile(JSON.stringify(this.dataset, null, 2), 'text/json', `${this.pack.metadata.id}.json`);
+    console.warn(this.dataset);
+    // saveDataToFile(JSON.stringify(this.dataset, null, 2), 'text/json', `${this.pack.metadata.id}.json`);
   }
 
   _sortEntries() {
