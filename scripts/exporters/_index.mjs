@@ -5,3 +5,4 @@ export { ItemExporter } from './item-exporter.mjs';
 export { MacroExporter } from './macro-exporter.mjs';
 export { PlaylistExporter } from './playlist-exporter.mjs';
 export { RollTableExporter } from './rolltable-exporter.mjs';
+export { SceneExporter } from './scene-exporter.mjs';

@@ -8,6 +8,7 @@ const EXPORTERS = {
   Macro: exporters.MacroExporter,
   Playlist: exporters.PlaylistExporter,
   RollTable: exporters.RollTableExporter,
+  Scene: exporters.SceneExporter,
 };
 
 export class ExporterInstanciator {
