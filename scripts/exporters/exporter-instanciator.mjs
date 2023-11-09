@@ -5,6 +5,7 @@ const EXPORTERS = {
   Adventure: exporters.AdventureExporter,
   Cards: exporters.CardsExporter,
   Item: exporters.ItemExporter,
+  JournalEntry: exporters.JournalEntryExporter,
   Macro: exporters.MacroExporter,
   Playlist: exporters.PlaylistExporter,
   RollTable: exporters.RollTableExporter,
