@@ -7,7 +7,7 @@ export class CardsExporter extends AbstractExporter {
     });
 
     for (const { _id, name, description, ...rest } of documents) {
-      const documentData = { name, description, cards: {} };
+      const documentData = { name, description };
 
       this._addCustomMapping(documentData, rest);
 
@@ -15,8 +15,12 @@ export class CardsExporter extends AbstractExporter {
 
       const document = await this.pack.getDocument(_id);
 
-      for (const { name, description, back, faces } of document.cards) {
-        documentData.cards[name] = { name, description, back, faces };
+      if (document.cards.size) {
+        documentData.cards = {};
+
+        for (const { name, description, back, faces } of document.cards) {
+          documentData.cards[name] = { name, description, back, faces };
+        }
       }
 
       this._stepProgressBar();

@@ -5,14 +5,18 @@ export class PlaylistExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const { _id, name, description } of documents) {
-      const documentData = { name, description, sounds: {} };
+      const documentData = { name, description };
 
       this.dataset.entries[name] = documentData;
 
       const document = await this.pack.getDocument(_id);
 
-      for (const { name, description } of document.sounds) {
-        documentData.sounds[name] = { name, description };
+      if (document.sounds.size) {
+        documentData.sounds = {};
+
+        for (const { name, description } of document.sounds) {
+          documentData.sounds[name] = { name, description };
+        }
       }
 
       this._stepProgressBar();

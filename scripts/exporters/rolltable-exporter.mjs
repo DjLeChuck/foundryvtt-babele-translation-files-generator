@@ -5,14 +5,18 @@ export class RollTableExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const { _id, name, description } of documents) {
-      const documentData = { name, description, results: {} };
+      const documentData = { name, description };
 
       this.dataset.entries[name] = documentData;
 
       const document = await this.pack.getDocument(_id);
 
-      for (const { range, text } of document.results) {
-        documentData.results[`${range[0]}-${range[1]}`] = text;
+      if (document.results.size) {
+        documentData.results = {};
+
+        for (const { range, text } of document.results) {
+          documentData.results[`${range[0]}-${range[1]}`] = text;
+        }
       }
 
       this._stepProgressBar();

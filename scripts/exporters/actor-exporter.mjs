@@ -7,7 +7,7 @@ export class ActorExporter extends AbstractExporter {
     });
 
     for (const { _id, name, items, prototypeToken: { name: tokenName } = {}, ...rest } of documents) {
-      const documentData = { name, tokenName: tokenName ?? name, items: {} };
+      const documentData = { name, tokenName: tokenName ?? name };
 
       this._addCustomMapping(documentData, rest);
 
@@ -15,8 +15,12 @@ export class ActorExporter extends AbstractExporter {
 
       const document = await this.pack.getDocument(_id);
 
-      for (const { _id, name } of document.items) {
-        documentData.items[_id] = { name };
+      if (document.items.size) {
+        documentData.items = {};
+
+        for (const { _id, name } of document.items) {
+          documentData.items[_id] = { name };
+        }
       }
 
       this._stepProgressBar();
