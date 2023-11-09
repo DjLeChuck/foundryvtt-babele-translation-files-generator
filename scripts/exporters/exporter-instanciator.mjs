@@ -6,6 +6,7 @@ const EXPORTERS = {
   Cards: exporters.CardsExporter,
   Item: exporters.ItemExporter,
   Macro: exporters.MacroExporter,
+  Playlist: exporters.PlaylistExporter,
 };
 
 export class ExporterInstanciator {
