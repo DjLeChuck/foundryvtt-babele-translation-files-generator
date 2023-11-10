@@ -14,11 +14,12 @@
   "BTFG.CompendiumExporter.CustomMapping": "Mapping de données personnalisé",
   "BTFG.CompendiumExporter.CustomMappingHint": "(premier champ : clef utilisée dans le fichier de traduction ; second champ : chemin d’accès à la donnée dans le document)",
   "BTFG.CompendiumExporter.RemoveCustomMapping": "Supprimer",
-  "BTFG.CompendiumExporter.AddCustomMapping":  "Ajouter",
+  "BTFG.CompendiumExporter.AddCustomMapping": "Ajouter",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Trier les entrées par ordre alphabétique",
   "BTFG.CompendiumExporter.GenerateFile": "Générer le fichier de traduction",
   "BTFG.ExporterInstanciator.InvalidCompendium": "Impossible de créer un exporteur pour le compendium {label}",
   "BTFG.Exporter.PleaseWait": "Traitement du compendium {label}. Merci de patienter, cela peut prendre un moment selon les données présentes à l’intérieur.",
   "BTFG.Exporter.ExportRunning": "Export en cours...",
-  "BTFG.Exporter.ExportFinished": "Export terminé !"
+  "BTFG.Exporter.ExportFinished": "Export terminé !",
+  "BTFG.ExportCompendiumFile": "Exporter le fichier de traduction"
 }

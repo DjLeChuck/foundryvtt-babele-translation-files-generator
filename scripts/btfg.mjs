@@ -16,3 +16,23 @@ Hooks.on('ready', () => {
     },
   };
 });
+
+Hooks.on('renderCompendium', (app, html) => {
+  if (!game.user.isGM) {
+    return;
+  }
+
+  html.closest('.app').find('.translate').remove();
+
+  const openBtn = $(`<a class="translate" data-tooltip="${game.i18n.localize('BTFG.ExportCompendiumFile')}">
+<i class="fas fa-download"></i>
+</a>`);
+  openBtn.on('click', (e) => {
+    e.preventDefault();
+
+    game.babeleFilesGenerator.api.compendiumExporter.export(app.metadata.id);
+  });
+
+  const titleElement = html.closest('.app').find('.window-title');
+  openBtn.insertAfter(titleElement);
+});

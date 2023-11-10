@@ -23,6 +23,12 @@ export class CompendiumExporterApp extends FormApplication {
     });
   }
 
+  export(packId) {
+    this.packId = packId;
+
+    this.render(true);
+  }
+
   getData(options = {}) {
     const context = super.getData(options);
 
