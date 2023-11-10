@@ -22,6 +22,14 @@ Vous aurez alors la dernière version et profiterez des mises à jour automatiqu
 Sinon, il est possible l’ajouter en utilisant le lien de son manifest :
 `https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/releases/latest/download/module.json`
 
+## Utilisation
+
+Ouvrez un compendium et cliquer sur l’icône de téléchargement en en-tête de fenêtre. Une dialogue de configuration
+apparaîtra alors et permettra de lancer l’export du fichier de traduction.
+
+Il est également possible de lancer une fenêtre de sélection du compendium par glisser-déposer en exécutant une macro
+contenant le script suivant : `game.babeleFilesGenerator.api.compendiumExporter.selectPack();`
+
 ## Comment contribuer ?
 
 ### Rapport de bug
@@ -48,6 +56,14 @@ You'll then have the latest version and benefit from automatic updates.
 
 Alternatively, you can add it using its manifest link:
 `https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/releases/latest/download/module.json`
+
+## Usage
+
+Open a compendium and click on the download icon in the window header. A configuration dialog will then appear, allowing
+you to start the export of the translation file.
+
+It is also possible to launch a selection window of the compendium by drag-and-drop by running a macro containing the
+following script: `game.babeleFilesGenerator.api.compendiumExporter.selectPack();`
 
 ## How to contribute?
 

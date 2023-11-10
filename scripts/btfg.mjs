@@ -30,7 +30,7 @@ Hooks.on('renderCompendium', (app, html) => {
   openBtn.on('click', (e) => {
     e.preventDefault();
 
-    game.babeleFilesGenerator.api.compendiumExporter.export(app.metadata.id);
+    game.babeleFilesGenerator.api.compendiumExporter.exportPack(app.metadata.id);
   });
 
   const titleElement = html.closest('.app').find('.window-title');

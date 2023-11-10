@@ -23,7 +23,13 @@ export class CompendiumExporterApp extends FormApplication {
     });
   }
 
-  export(packId) {
+  selectPack() {
+    this.packId = null;
+
+    this.render(true);
+  }
+
+  exportPack(packId) {
     this.packId = packId;
 
     this.render(true);
