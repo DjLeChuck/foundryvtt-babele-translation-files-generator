@@ -2,9 +2,9 @@ name: Create Module Files For GitHub Release
 
 
 env:
-    project_url: "https://github.com/${{github.repository}}"
-    latest_manifest_url: "https://github.com/${{github.repository}}/releases/latest/download/module.json"
-    release_module_url: "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
+    project_url: "https://github.com/${{ github.repository }}"
+    latest_manifest_url: "https://github.com/${{ github.repository }}/releases/latest/download/module.json"
+    release_module_url: "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/module.zip"
 
 
 on:
@@ -35,7 +35,7 @@ jobs:
                 with:
                     files: 'module.json'
                 env:
-                    VERSION: ${{github.ref_name}}
+                    VERSION: ${{ github.ref_name }}
                     URL: ${{ env.project_url }}
                     MANIFEST: ${{ env.latest_manifest_url }}
                     DOWNLOAD: ${{ env.release_module_url }}
@@ -63,5 +63,5 @@ jobs:
                     prerelease: ${{ github.event.release.prerelease }}
                     token: ${{ secrets.GITHUB_TOKEN }}
                     artifacts: './module.json, ./module.zip'
-                    tag: ${{ github.event.release.tag_name }}
+                    tag: ${{ github.ref_name }}
                     body: ${{ github.event.release.body }}
