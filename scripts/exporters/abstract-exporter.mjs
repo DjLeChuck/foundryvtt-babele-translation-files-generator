@@ -59,6 +59,16 @@ export class AbstractExporter {
     throw new Error('You must implement this function');
   }
 
+  static _addCustomMapping(customMapping, indexDocument, documentData) {
+    const flattenDocument = foundry.utils.flattenObject(indexDocument);
+
+    customMapping.forEach(({ key, value }) => {
+      if (flattenDocument.hasOwnProperty(value)) {
+        documentData[key] = flattenDocument[value];
+      }
+    });
+  }
+
   _downloadFile() {
     ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
@@ -90,15 +100,5 @@ export class AbstractExporter {
 
   _endProgressBar() {
     SceneNavigation.displayProgressBar({ label: this.progessMessage, pct: 100 });
-  }
-
-  _addCustomMapping(documentData, rest) {
-    const flattenRest = foundry.utils.flattenObject(rest);
-
-    this.options.customMapping.forEach(({ key, value }) => {
-      if (flattenRest[value] ?? null) {
-        documentData[key] = flattenRest[value];
-      }
-    });
   }
 }
