@@ -1,8 +1,16 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
+import * as exporters from './_index.mjs';
 
 export class AdventureExporter extends AbstractExporter {
   async _processDataset() {
-    const avPack = await this.pack.getDocument([...this.pack.index][0]._id);
+    const avPackIndex = await this.pack.getIndex({
+      fields: ['caption', 'scenes', 'macros', 'playlists', 'actors', 'items', 'tables', 'folders', 'journal', 'cards'],
+    });
+    const avPack = avPackIndex.contents[0];
+
+    this.progressTotalElements = avPack.scenes.length + avPack.macros.length + avPack.playlists.length
+      + avPack.actors.length + avPack.items.length + avPack.tables.length + avPack.folders.length
+      + avPack.journal.length + avPack.cards.length;
 
     this.dataset.entries = {
       [avPack.name]: {
@@ -22,52 +30,67 @@ export class AdventureExporter extends AbstractExporter {
     };
 
     // Scenes
-    avPack.scenes.forEach(({ name }) => this.dataset.entries[avPack.name].scenes[name] = { name });
+    for (const document of avPack.scenes) {
+      this.dataset.entries[avPack.name].scenes[document.name] = exporters.SceneExporter.getDocumentData(document, document);
+
+      this._stepProgressBar();
+    }
 
     // Macros
-    avPack.macros.forEach(({ name }) => this.dataset.entries[avPack.name].macros[name] = { name });
+    for (const document of avPack.macros) {
+      this.dataset.entries[avPack.name].macros[document.name] = exporters.MacroExporter.getDocumentData(document);
+
+      this._stepProgressBar();
+    }
 
     // Playlists
-    avPack.playlists.forEach(({ name, description }) => this.dataset.entries[avPack.name].playlists[name] = {
-      name,
-      description,
-    });
+    for (const document of avPack.playlists) {
+      this.dataset.entries[avPack.name].playlists[document.name] = exporters.PlaylistExporter.getDocumentData(document, document);
+
+      this._stepProgressBar();
+    }
 
     // Actors
-    avPack.actors.forEach(({ name }) => this.dataset.entries[avPack.name].actors[name] = { name, tokenName: name });
+    for (const document of avPack.actors) {
+      this.dataset.entries[avPack.name].actors[document.name] = exporters.ActorExporter.getDocumentData(document, document, []);
+
+      this._stepProgressBar();
+    }
 
     // Items
-    avPack.items.forEach(({ name }) => this.dataset.entries[avPack.name].items[name] = { name, id: name });
+    for (const document of avPack.items) {
+      this.dataset.entries[avPack.name].items[document.name] = exporters.ItemExporter.getDocumentData(document, []);
+
+      this._stepProgressBar();
+    }
 
     // Tables
-    avPack.tables.forEach(({ name, description, results }) => {
-      const resultsDataset = {};
+    for (const document of avPack.tables) {
+      this.dataset.entries[avPack.name].tables[document.name] = exporters.RollTableExporter.getDocumentData(document, document);
 
-      results.forEach(({ range, text }) => resultsDataset[`${range[0]}-${range[1]}`] = text);
-
-      this.dataset.entries[avPack.name].tables[name] = { name, description, results: resultsDataset };
-    });
+      this._stepProgressBar();
+    }
 
     // Folders
-    avPack.folders.forEach(({ name }) => this.dataset.entries[avPack.name].folders[name] = name);
+    for (const { name } of avPack.folders) {
+      this.dataset.entries[avPack.name].folders[name] = name;
+
+      this._stepProgressBar();
+    }
 
     // Journals
-    avPack.journal.forEach(({ name, pages }) => {
-      const pagesDataset = {};
+    for (const document of avPack.journal) {
+      this.dataset.entries[avPack.name].journals[document.name] = exporters.JournalEntryExporter.getDocumentData(document, document);
 
-      pages.forEach(({ name, text: { content: text } }) => pagesDataset[name] = { name, text });
-
-      this.dataset.entries[avPack.name].journals[name] = { name, pages: pagesDataset };
-    });
+      this._stepProgressBar();
+    }
 
     // Cards
-    avPack.cards.forEach(({ name, description, cards }) => {
-      const cardsDataset = {};
+    for (const document of avPack.cards) {
+      this.dataset.entries[avPack.name].cards[document.name] = exporters.CardsExporter.getDocumentData(document, document);
 
-      cards.forEach(({ name, description, faces, back }) => cardsDataset[name] = { name, description, back, faces });
-
-      this.dataset.entries[avPack.name].cards[name] = { name, description, cards: cardsDataset };
-    });
+      this._stepProgressBar();
+    }
 
     // Remove empty collections
     for (const key in this.dataset.entries[avPack.name]) {

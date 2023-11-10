@@ -15,6 +15,7 @@ export class AbstractExporter {
 
   progessNbImported;
   progessMessage;
+  progressTotalElements;
 
   constructor(pack, options) {
     if (this.constructor === AbstractExporter) {
@@ -23,9 +24,10 @@ export class AbstractExporter {
 
     this.options = options;
     this.pack = pack;
-    this.dataset.label = this.pack.metadata.label;
+    this.dataset.label = pack.metadata.label;
     this.progessNbImported = 0;
     this.progessMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
+    this.progressTotalElements = pack.index.size;
   }
 
   async export() {
@@ -69,6 +71,10 @@ export class AbstractExporter {
     });
   }
 
+  static _hasContent(dataset) {
+    return Array.isArray(dataset) ? dataset.length : dataset.size;
+  }
+
   _downloadFile() {
     ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
@@ -94,7 +100,7 @@ export class AbstractExporter {
 
     SceneNavigation.displayProgressBar({
       label: this.progessMessage,
-      pct: Math.floor(this.progessNbImported * 100 / this.pack.index.size),
+      pct: Math.floor(this.progessNbImported * 100 / this.progressTotalElements),
     });
   }
 

@@ -1,9 +1,17 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class ActorExporter extends AbstractExporter {
-  static getDocumentData(indexDocument, customMapping) {
+  static getDocumentData(indexDocument, document, customMapping) {
     const { name, prototypeToken: { name: tokenName } = {} } = indexDocument;
     const documentData = { name, tokenName: tokenName ?? name };
+
+    if (AbstractExporter._hasContent(document.items)) {
+      documentData.items = {};
+
+      for (const { name } of document.items) {
+        documentData.items[name] = { name };
+      }
+    }
 
     AbstractExporter._addCustomMapping(customMapping, indexDocument, documentData);
 
@@ -16,7 +24,11 @@ export class ActorExporter extends AbstractExporter {
     });
 
     for (const indexDocument of documents) {
-      const documentData = ActorExporter.getDocumentData(indexDocument, this.options.customMapping);
+      const documentData = ActorExporter.getDocumentData(
+        indexDocument,
+        await this.pack.getDocument(indexDocument._id),
+        this.options.customMapping,
+      );
 
       this.dataset.entries[indexDocument.name] = documentData;
 
@@ -25,8 +37,8 @@ export class ActorExporter extends AbstractExporter {
       if (document.items.size) {
         documentData.items = {};
 
-        for (const { _id, name } of document.items) {
-          documentData.items[_id] = { name };
+        for (const { name } of document.items) {
+          documentData.items[name] = { name };
         }
       }
 

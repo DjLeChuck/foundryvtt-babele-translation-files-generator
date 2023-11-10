@@ -1,13 +1,11 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class RollTableExporter extends AbstractExporter {
-  static async getDocumentData(indexDocument, pack) {
-    const { _id, name, description } = indexDocument;
+  static getDocumentData(indexDocument, document) {
+    const { name, description } = indexDocument;
     const documentData = { name, description };
 
-    const document = await pack.getDocument(_id);
-
-    if (document.results.size) {
+    if (AbstractExporter._hasContent(document.results)) {
       documentData.results = {};
 
       for (const { range, text } of document.results) {
@@ -22,7 +20,10 @@ export class RollTableExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = await RollTableExporter.getDocumentData(indexDocument, this.pack);
+      this.dataset.entries[indexDocument.name] = RollTableExporter.getDocumentData(
+        indexDocument,
+        await this.pack.getDocument(indexDocument._id),
+      );
 
       this._stepProgressBar();
     }

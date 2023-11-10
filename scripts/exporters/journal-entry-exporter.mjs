@@ -1,13 +1,11 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class JournalEntryExporter extends AbstractExporter {
-  static async getDocumentData(indexDocument, pack) {
-    const { _id, name } = indexDocument;
+  static getDocumentData(indexDocument, document) {
+    const { name } = indexDocument;
     const documentData = { name };
 
-    const document = await pack.getDocument(_id);
-
-    if (document.pages.size) {
+    if (AbstractExporter._hasContent(document.pages)) {
       documentData.pages = {};
 
       for (const {
@@ -50,7 +48,10 @@ export class JournalEntryExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = await JournalEntryExporter.getDocumentData(indexDocument, this.pack);
+      this.dataset.entries[indexDocument.name] = JournalEntryExporter.getDocumentData(
+        indexDocument,
+        await this.pack.getDocument(indexDocument._id),
+      );
 
       this._stepProgressBar();
     }

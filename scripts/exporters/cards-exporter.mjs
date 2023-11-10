@@ -1,14 +1,11 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class CardsExporter extends AbstractExporter {
-  static async getDocumentData(indexDocument, pack) {
-    const { _id, name, description } = indexDocument;
-
+  static getDocumentData(indexDocument, document) {
+    const { name, description } = indexDocument;
     const documentData = { name, description };
 
-    const document = await pack.getDocument(_id);
-
-    if (document.cards.size) {
+    if (AbstractExporter._hasContent(document.cards)) {
       documentData.cards = {};
 
       for (const { name, description, back, faces } of document.cards) {
@@ -23,7 +20,10 @@ export class CardsExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = await CardsExporter.getDocumentData(indexDocument, this.pack);
+      this.dataset.entries[indexDocument.name] = CardsExporter.getDocumentData(
+        indexDocument,
+        await this.pack.getDocument(indexDocument._id),
+      );
 
       this._stepProgressBar();
     }
