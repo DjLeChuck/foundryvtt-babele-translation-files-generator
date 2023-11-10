@@ -29,17 +29,13 @@ jobs:
             -   name: Build assets [2/2] - yarn build
                 run: NODE_ENV=production yarn run build
 
-            -   name: Extract Version From Tag
-                id: get_version
-                uses: battila7/get-version-action@v2
-
             -   name: Modify Module Manifest With Release-Specific Values
                 id: sub_manifest_link_version
                 uses: cschleiden/replace-tokens@v1
                 with:
                     files: 'module.json'
                 env:
-                    VERSION: ${{steps.get_version.outputs.version-without-v}}
+                    VERSION: ${{github.ref_name}}
                     URL: ${{ env.project_url }}
                     MANIFEST: ${{ env.latest_manifest_url }}
                     DOWNLOAD: ${{ env.release_module_url }}
