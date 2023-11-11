@@ -44,6 +44,8 @@ export class CompendiumExporterApp extends FormApplication {
     this.packId = packId;
     this.object = foundry.utils.duplicate(this.defaultExportOptions);
 
+    this._loadPackMapping();
+
     this.render(true);
   }
 
@@ -83,27 +85,39 @@ export class CompendiumExporterApp extends FormApplication {
       return;
     }
 
-    this.packId = data.id;
-
-    this.render();
+    this.exportPack(data.id);
   }
 
-  _onAddMapping(e) {
+  async _onAddMapping(e) {
     e.preventDefault();
 
     const { currentTarget: { dataset: { addMapping: type } } } = e;
 
     this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = { key: '', value: '' };
 
+    await this._savePackMapping();
+
     this.render();
   }
 
-  _onRemoveMapping(e) {
+  async _onRemoveMapping(e) {
     e.preventDefault();
 
     const { currentTarget: { dataset: { removeMapping: type, index } } } = e;
 
-    this.object.customMapping[type].splice(index, 1);
+    delete this.object.customMapping[type][index];
+
+    // Re-index
+    const newMapping = {};
+    const arrayMapping = Object.values(this.object.customMapping[type]);
+
+    for (let i = 0; i < arrayMapping.length; i++) {
+      newMapping[i] = arrayMapping[i];
+    }
+
+    this.object.customMapping[type] = newMapping;
+
+    await this._savePackMapping();
 
     this.render();
   }
@@ -130,6 +144,8 @@ export class CompendiumExporterApp extends FormApplication {
   async _updateObject(e, formData) {
     this.object = foundry.utils.mergeObject(this.object, foundry.utils.expandObject(formData));
 
+    await this._savePackMapping();
+
     this.render();
   }
 
@@ -154,5 +170,20 @@ export class CompendiumExporterApp extends FormApplication {
     }
 
     return pack;
+  }
+
+  _loadPackMapping() {
+    const packsMappings = game.settings.get(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING);
+    this.object.customMapping = packsMappings[this.packId.replace('.', '-')] ?? {
+      actor: {},
+      item: {},
+    };
+  }
+
+  async _savePackMapping() {
+    const savedMapping = game.settings.get(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING);
+    savedMapping[this.packId.replace('.', '-')] = this.object.customMapping;
+
+    await game.settings.set(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING, savedMapping);
   }
 }
