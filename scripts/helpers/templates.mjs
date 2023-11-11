@@ -8,5 +8,6 @@ export const registerTemplates = function () {
   loadTemplates([
     `modules/${BTFG.MODULE_ID}/templates/_choose.html.hbs`,
     `modules/${BTFG.MODULE_ID}/templates/_export.html.hbs`,
+    `modules/${BTFG.MODULE_ID}/templates/_default-mapping.html.hbs`,
   ]);
 };

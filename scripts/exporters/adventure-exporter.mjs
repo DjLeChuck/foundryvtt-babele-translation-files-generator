@@ -52,14 +52,21 @@ export class AdventureExporter extends AbstractExporter {
 
     // Actors
     for (const document of avPack.actors) {
-      this.dataset.entries[avPack.name].actors[document.name] = exporters.ActorExporter.getDocumentData(document, document, []);
+      this.dataset.entries[avPack.name].actors[document.name] = exporters.ActorExporter.getDocumentData(
+        document,
+        document,
+        this.options.customMapping.actor,
+      );
 
       this._stepProgressBar();
     }
 
     // Items
     for (const document of avPack.items) {
-      this.dataset.entries[avPack.name].items[document.name] = exporters.ItemExporter.getDocumentData(document, []);
+      this.dataset.entries[avPack.name].items[document.name] = exporters.ItemExporter.getDocumentData(
+        document,
+        this.options.customMapping.item,
+      );
 
       this._stepProgressBar();
     }

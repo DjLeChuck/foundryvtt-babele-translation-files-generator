@@ -2,9 +2,12 @@ import * as BTFG from '../const.mjs';
 import { ExporterInstanciator } from '../exporters/exporter-instanciator.mjs';
 
 export class CompendiumExporterApp extends FormApplication {
-  exportOptions = {
+  defaultExportOptions = {
     sortEntries: false,
-    customMapping: [],
+    customMapping: {
+      actor: {},
+      item: {},
+    },
   };
   packId = null;
 
@@ -20,17 +23,26 @@ export class CompendiumExporterApp extends FormApplication {
       submitOnChange: true,
       closeOnSubmit: false,
       dragDrop: [{ dragSelector: null, dropSelector: '.drop-zone' }],
+      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'actor' }],
     });
+  }
+
+  constructor(object = {}, options = {}) {
+    super(object, options);
+
+    this.object = {};
   }
 
   selectPack() {
     this.packId = null;
+    this.object = foundry.utils.duplicate(this.defaultExportOptions);
 
     this.render(true);
   }
 
   exportPack(packId) {
     this.packId = packId;
+    this.object = foundry.utils.duplicate(this.defaultExportOptions);
 
     this.render(true);
   }
@@ -40,11 +52,13 @@ export class CompendiumExporterApp extends FormApplication {
 
     if (this.packId) {
       context.pack = this._getPack();
+      context.actorMapping = 'Actor' === context.pack.metadata.type;
+      context.adventureMapping = 'Adventure' === context.pack.metadata.type;
+      context.itemMapping = 'Item' === context.pack.metadata.type;
+      context.canCustomizeMapping = context.actorMapping || context.adventureMapping || context.itemMapping;
     }
 
     context.babeleActive = game?.babele?.initialized;
-    context.sortEntries = this.exportOptions.sortEntries;
-    context.customMapping = this.exportOptions.customMapping;
 
     return context;
   }
@@ -77,7 +91,9 @@ export class CompendiumExporterApp extends FormApplication {
   _onAddMapping(e) {
     e.preventDefault();
 
-    this.exportOptions.customMapping.push({ key: '', value: '' });
+    const { currentTarget: { dataset: { addMapping: type } } } = e;
+
+    this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = { key: '', value: '' };
 
     this.render();
   }
@@ -85,9 +101,9 @@ export class CompendiumExporterApp extends FormApplication {
   _onRemoveMapping(e) {
     e.preventDefault();
 
-    const { currentTarget: { dataset: { removeMapping: index } } } = e;
+    const { currentTarget: { dataset: { removeMapping: type, index } } } = e;
 
-    this.exportOptions.customMapping.splice(index, 1);
+    this.object.customMapping[type].splice(index, 1);
 
     this.render();
   }
@@ -96,7 +112,7 @@ export class CompendiumExporterApp extends FormApplication {
     e.preventDefault();
     const pack = this._getPack();
     if (null !== pack) {
-      const exporter = ExporterInstanciator.createForPack(pack, this.exportOptions);
+      const exporter = ExporterInstanciator.createForPack(pack, this.object);
 
       await exporter.export();
     }
@@ -106,13 +122,13 @@ export class CompendiumExporterApp extends FormApplication {
     e.preventDefault();
 
     this.packId = null;
+    this.object = foundry.utils.duplicate(this.defaultExportOptions);
 
     this.render();
   }
 
   async _updateObject(e, formData) {
-    this.exportOptions = foundry.utils.expandObject(formData);
-    this.exportOptions.customMapping = Object.values(this.exportOptions.customMapping ?? []);
+    this.object = foundry.utils.mergeObject(this.object, foundry.utils.expandObject(formData));
 
     this.render();
   }

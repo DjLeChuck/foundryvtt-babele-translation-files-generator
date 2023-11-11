@@ -14,12 +14,14 @@
   "BTFG.CompendiumExporter.CustomMapping": "Custom data mapping",
   "BTFG.CompendiumExporter.CustomMappingHint": "(first field: key used in the translation file; second field: path to the data in the document)",
   "BTFG.CompendiumExporter.RemoveCustomMapping": "Remove",
-  "BTFG.CompendiumExporter.AddCustomMapping":  "Add",
+  "BTFG.CompendiumExporter.AddCustomMapping": "Add",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
   "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {label}",
   "BTFG.Exporter.PleaseWait": "Processing compendium {label}. Please be patient, it can take a while depending on the data present inside.",
   "BTFG.Exporter.ExportRunning": "Export in progress...",
   "BTFG.Exporter.ExportFinished": "Export finished!",
-  "BTFG.ExportCompendiumFile": "Export translation file"
+  "BTFG.ExportCompendiumFile": "Export translation file",
+  "BTFG.CompendiumExporter.ActorMapping": "Actor mapping",
+  "BTFG.CompendiumExporter.ItemMapping": "Item mapping"
 }

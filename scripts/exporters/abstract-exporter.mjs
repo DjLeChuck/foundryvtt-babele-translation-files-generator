@@ -1,8 +1,5 @@
 export class AbstractExporter {
-  options = {
-    sortEntries: false,
-    customMapping: [],
-  };
+  options;
   dataset = {
     label: '',
     mapping: {},
@@ -48,13 +45,31 @@ export class AbstractExporter {
   }
 
   async _processCustomMapping() {
-    if (0 === this.options.customMapping.length) {
-      delete this.dataset.mapping;
+    switch (this.pack.metadata.type) {
+      case 'Actor':
+        Object.values(this.options.customMapping.actor).forEach(({ key, value }) => this.dataset.mapping[key] = value);
 
-      return;
+        break;
+      case 'Adventure':
+        this.dataset.mapping = { actors: {}, items: {} };
+
+        Object.values(this.options.customMapping.actor).forEach(
+          ({ key, value }) => this.dataset.mapping.actors[key] = value,
+        );
+        Object.values(this.options.customMapping.item).forEach(
+          ({ key, value }) => this.dataset.mapping.items[key] = value,
+        );
+
+        break;
+      case 'Item':
+        Object.values(this.options.customMapping.item).forEach(({ key, value }) => this.dataset.mapping[key] = value);
+
+        break;
     }
 
-    this.options.customMapping.forEach(({ key, value }) => this.dataset.mapping[key] = value);
+    if (0 === Object.keys(this.dataset.mapping).length) {
+      delete this.dataset.mapping;
+    }
   }
 
   async _processDataset() {
@@ -64,7 +79,7 @@ export class AbstractExporter {
   static _addCustomMapping(customMapping, indexDocument, documentData) {
     const flattenDocument = foundry.utils.flattenObject(indexDocument);
 
-    customMapping.forEach(({ key, value }) => {
+    Object.values(customMapping).forEach(({ key, value }) => {
       if (flattenDocument.hasOwnProperty(value)) {
         documentData[key] = flattenDocument[value];
       }

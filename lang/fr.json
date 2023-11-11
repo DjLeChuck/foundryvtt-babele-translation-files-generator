@@ -21,5 +21,7 @@
   "BTFG.Exporter.PleaseWait": "Traitement du compendium {label}. Merci de patienter, cela peut prendre un moment selon les données présentes à l’intérieur.",
   "BTFG.Exporter.ExportRunning": "Export en cours...",
   "BTFG.Exporter.ExportFinished": "Export terminé !",
-  "BTFG.ExportCompendiumFile": "Exporter le fichier de traduction"
+  "BTFG.ExportCompendiumFile": "Exporter le fichier de traduction",
+  "BTFG.CompendiumExporter.ActorMapping": "Mapping des acteurs",
+  "BTFG.CompendiumExporter.ItemMapping": "Mapping des objets"
 }

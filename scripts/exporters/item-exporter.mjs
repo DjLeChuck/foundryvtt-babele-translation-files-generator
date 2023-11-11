@@ -12,11 +12,14 @@ export class ItemExporter extends AbstractExporter {
 
   async _processDataset() {
     const documents = await this.pack.getIndex({
-      fields: [...this.options.customMapping.map((mapping) => mapping.value)],
+      fields: [...Object.values(this.options.customMapping.item).map((mapping) => mapping.value)],
     });
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = ItemExporter.getDocumentData(indexDocument, this.options.customMapping);
+      this.dataset.entries[indexDocument.name] = ItemExporter.getDocumentData(
+        indexDocument,
+        this.options.customMapping.item,
+      );
 
       this._stepProgressBar();
     }

@@ -12,30 +12,41 @@
 </p>
 
 <form class="flexcol">
-  <div>
-    <fieldset>
-      <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
-      <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
-      {{#each customMapping}}
-        <div class="form-group-stacked flexrow">
-          <div class="flexrow">
-            <input type="text" value="{{this.key}}" name="customMapping.{{@index}}.key" placeholder="customKey" />
-            <input type="text" value="{{this.value}}" name="customMapping.{{@index}}.value"
-                   placeholder="system.subData.customKey" />
-            <button type="button" data-remove-mapping="{{@index}}">
-              <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.RemoveCustomMapping"}}
-            </button>
-          </div>
-        </div>
-      {{/each}}
-      <button type="button" data-add-mapping>
-        <i class="fa fa-add"></i> {{localize "BTFG.CompendiumExporter.AddCustomMapping"}}
-      </button>
-    </fieldset>
-  </div>
+  {{#if canCustomizeMapping}}
+    <div>
+      <fieldset>
+        <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
+        <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
+
+        {{#if actorMapping}}
+          {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
+        {{/if}}
+
+        {{#if adventureMapping}}
+          <nav class="sheet-tabs tabs" data-group="primary">
+            <a class="item" data-tab="actor">{{localize "BTFG.CompendiumExporter.ActorMapping"}}</a>
+            <a class="item" data-tab="item">{{localize "BTFG.CompendiumExporter.ItemMapping"}}</a>
+          </nav>
+
+          <section class="sheet-body">
+            <div class="tab" data-group="primary" data-tab="actor">
+              {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
+            </div>
+            <div class="tab" data-group="primary" data-tab="item">
+              {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
+            </div>
+          </section>
+        {{/if}}
+
+        {{#if itemMapping}}
+          {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
+        {{/if}}
+      </fieldset>
+    </div>
+  {{/if}}
   <div class="form-group">
     <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
-    <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked sortEntries}} />
+    <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked object.sortEntries}} />
   </div>
   <footer class="sheet-footer flexrow">
     <button type="button" data-export>

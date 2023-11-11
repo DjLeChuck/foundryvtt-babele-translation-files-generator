@@ -20,14 +20,17 @@ export class ActorExporter extends AbstractExporter {
 
   async _processDataset() {
     const documents = await this.pack.getIndex({
-      fields: ['prototypeToken.name', ...this.options.customMapping.map((mapping) => mapping.value)],
+      fields: [
+        'prototypeToken.name',
+        ...Object.values(this.options.customMapping.actor).map((mapping) => mapping.value),
+      ],
     });
 
     for (const indexDocument of documents) {
       const documentData = ActorExporter.getDocumentData(
         indexDocument,
         await this.pack.getDocument(indexDocument._id),
-        this.options.customMapping,
+        this.options.customMapping.actor,
       );
 
       this.dataset.entries[indexDocument.name] = documentData;

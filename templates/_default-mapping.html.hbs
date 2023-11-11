@@ -1,0 +1,15 @@
+{{#each mapping}}
+  <div class="form-group-stacked flexrow">
+    <div class="flexrow">
+      <input type="text" value="{{this.key}}" name="customMapping.{{../type}}.{{@index}}.key" placeholder="customKey" />
+      <input type="text" value="{{this.value}}" name="customMapping.{{../type}}.{{@index}}.value"
+             placeholder="system.subData.customKey" />
+      <button type="button" data-remove-mapping="{{../type}}" data-index="{{@index}}">
+        <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.RemoveCustomMapping"}}
+      </button>
+    </div>
+  </div>
+{{/each}}
+<button type="button" data-add-mapping="{{type}}">
+  <i class="fa fa-add"></i> {{localize "BTFG.CompendiumExporter.AddCustomMapping"}}
+</button>
