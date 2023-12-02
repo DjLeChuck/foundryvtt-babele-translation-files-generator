@@ -30,6 +30,12 @@ apparaîtra alors et permettra de lancer l’export du fichier de traduction.
 Il est également possible de lancer une fenêtre de sélection du compendium par glisser-déposer en exécutant une macro
 contenant le script suivant : `game.babeleFilesGenerator.api.compendiumExporter.selectPack();`
 
+Si vous possédez déjà un fichier de traduction, vous pourrez le sélectionner afin d’en obtenir un nouveau à jour qui
+contiendra les traductions que vous avez déjà effectuées ainsi que les nouvelles non présentes dans votre fichier.
+
+Enfin, une case à cocher vous permettra également de générer directement un module Foundry d’exemple fonctionnel qui
+vous permettra de tester rapidement votre fichier de traduction dans un monde.
+
 ## Comment contribuer ?
 
 ### Rapport de bug
@@ -64,6 +70,12 @@ you to start the export of the translation file.
 
 It is also possible to launch a selection window of the compendium by drag-and-drop by running a macro containing the
 following script: `game.babeleFilesGenerator.api.compendiumExporter.selectPack();`
+
+If you already have a translation file, you can select it to obtain a new, up-to-date one which will contain the
+translations you have already made as well as any new ones not present in your file.
+
+Finally, a checkbox will also allow you to generate an example of a working Foundry module that will allow you to
+quickly test your translation file in a world.
 
 ## How to contribute?
 

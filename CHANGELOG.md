@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.1.0] - 2023-12-02
+
 ### Added
 
 - Ability to give an existing JSON file in order to update it’s content with new translations only
@@ -18,7 +20,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.0.1...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.1.0...main
+
+[1.1.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.0.1...1.1.0
 
 [1.0.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.0.0...1.0.1
 
