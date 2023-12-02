@@ -20,6 +20,8 @@
   "BTFG.CompendiumExporter.SelectedFile": "Selected file:",
   "BTFG.CompendiumExporter.UnselectExistingFile": "Cancel",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
+  "BTFG.CompendiumExporter.GenerateModule": "Generate a Foundry module template",
+  "BTFG.CompendiumExporter.TranslationLocale": "Translation locale",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
   "BTFG.ExporterInstanciator.InvalidCompendium": "Can not create exporter for the compendium {label}",
   "BTFG.Exporter.PleaseWait": "Processing compendium {label}. Please be patient, it can take a while depending on the data present inside.",
@@ -27,5 +29,6 @@
   "BTFG.Exporter.ExportFinished": "Export finished!",
   "BTFG.ExportCompendiumFile": "Export translation file",
   "BTFG.CompendiumExporter.ActorMapping": "Actor mapping",
-  "BTFG.CompendiumExporter.ItemMapping": "Item mapping"
+  "BTFG.CompendiumExporter.ItemMapping": "Item mapping",
+  "BTFG.Errors.CanNotGenerateModule": "An error occured during module generation. Plese see details in the console logs."
 }

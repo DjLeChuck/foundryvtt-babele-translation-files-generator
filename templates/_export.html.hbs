@@ -63,6 +63,22 @@
     <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
     <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked object.sortEntries}} />
   </div>
+  <div class="form-group">
+    <label for="generateModule">{{localize "BTFG.CompendiumExporter.GenerateModule"}}</label>
+    <input type="checkbox" value="1" id="generateModule" name="generateModule" {{checked object.generateModule}} />
+  </div>
+  {{#if object.generateModule}}
+    <div class="form-group">
+      <label for="translationLocale">{{localize "BTFG.CompendiumExporter.TranslationLocale"}}</label>
+      <select id="translationLocale" name="translationLocale">
+        {{#select object.translationLocale}}
+          {{#each availableLocales as |name k|}}
+            <option value="{{k}}">{{localize name}}</option>
+          {{/each}}
+        {{/select}}
+      </select>
+    </div>
+  {{/if}}
   <footer class="sheet-footer flexrow">
     <button type="button" data-export>
       <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}

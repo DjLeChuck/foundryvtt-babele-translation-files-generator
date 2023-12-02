@@ -5,6 +5,7 @@
 ### Added
 
 - Ability to give an existing JSON file in order to update it’s content with new translations only
+- Ability to generate a template of a working module in order to use the translations
 
 ## [1.0.1] - 2023-11-11
 

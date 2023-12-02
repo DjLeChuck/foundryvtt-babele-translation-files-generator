@@ -1,3 +1,9 @@
+import JSZip from '../vendors/jszip/jszip.min.js';
+import FileSaver from '../vendors/filesaver/FileSaver.min.js';
+
+const MODULE_TPL_BASE_URI = './modules/babele-translation-files-generator/_module_tpl';
+const MODULE_TPL_ID = 'your-module-id';
+
 export class AbstractExporter {
   options;
   dataset = {
@@ -44,7 +50,11 @@ export class AbstractExporter {
 
     this._endProgressBar();
 
-    this._downloadFile();
+    if (this.options.generateModule) {
+      await this._generateModule();
+    } else {
+      this._downloadFile();
+    }
   }
 
   async _processExistingEntries() {
@@ -112,10 +122,14 @@ export class AbstractExporter {
     return Array.isArray(dataset) ? dataset.length : dataset.size;
   }
 
+  _getStringifiedDataset() {
+    return JSON.stringify(this.dataset, null, 2);
+  }
+
   _downloadFile() {
     ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
-    saveDataToFile(JSON.stringify(this.dataset, null, 2), 'text/json', `${this.pack.metadata.id}.json`);
+    saveDataToFile(this._getStringifiedDataset(), 'text/json', `${this.pack.metadata.id}.json`);
   }
 
   _sortEntries() {
@@ -125,6 +139,34 @@ export class AbstractExporter {
         ...acc,
         [key]: this.dataset.entries[key],
       }), {});
+  }
+
+  async _generateModule() {
+    try {
+      const zip = new JSZip();
+
+      const readme = await fetch(`${MODULE_TPL_BASE_URI}/README.md`);
+      zip.file(`${MODULE_TPL_ID}/README.md`, await readme.text());
+
+      const module = await fetch(`${MODULE_TPL_BASE_URI}/module.json`);
+      zip.file(`${MODULE_TPL_ID}/module.json`, await module.text());
+
+      const register = await fetch(`${MODULE_TPL_BASE_URI}/register.js`);
+      zip.file(`${MODULE_TPL_ID}/register.js`, (await register.text()).replaceAll('##LOCALE##', this.options.translationLocale));
+
+      zip.file(
+        `${MODULE_TPL_ID}/compendium/${this.options.translationLocale}/${this.pack.metadata.id}.json`,
+        this._getStringifiedDataset(),
+      );
+
+      ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
+
+      FileSaver.saveAs(await zip.generateAsync({ type: 'blob' }), 'your-module-id.zip');
+    } catch (err) {
+      ui.notifications.error(game.i18n.localize('BTFG.Errors.CanNotGenerateModule'));
+
+      console.error(err);
+    }
   }
 
   _startProgressBar() {

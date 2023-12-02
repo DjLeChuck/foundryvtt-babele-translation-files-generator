@@ -4,6 +4,8 @@ import { ExporterInstanciator } from '../exporters/exporter-instanciator.mjs';
 export class CompendiumExporterApp extends FormApplication {
   defaultExportOptions = {
     sortEntries: false,
+    generateModule: false,
+    translationLocale: 'en',
     customMapping: {
       actor: {},
       item: {},
@@ -62,6 +64,7 @@ export class CompendiumExporterApp extends FormApplication {
       context.selectedFileName = this.selectedFile?.name;
     }
 
+    context.availableLocales = game.settings.settings.get('core.language').choices;
     context.babeleActive = game?.babele?.initialized;
 
     return context;
