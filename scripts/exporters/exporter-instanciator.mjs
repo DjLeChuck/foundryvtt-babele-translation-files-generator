@@ -16,11 +16,12 @@ export class ExporterInstanciator {
   /**
    * @param {CompendiumCollection} pack
    * @param {*} options
+   * @param {File} existingFile
    * @returns {AbstractExporter}
    */
-  static createForPack(pack, options) {
+  static createForPack(pack, options, existingFile) {
     try {
-      return new EXPORTERS[pack.metadata.type](pack, options);
+      return new EXPORTERS[pack.metadata.type](pack, options, existingFile);
     } catch (err) {
       console.error(`[BTFG] Exporter creation error: ${err.toString()}`);
 

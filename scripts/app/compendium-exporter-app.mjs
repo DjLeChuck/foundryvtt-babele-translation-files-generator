@@ -10,6 +10,7 @@ export class CompendiumExporterApp extends FormApplication {
     },
   };
   packId = null;
+  selectedFile = null;
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -58,6 +59,7 @@ export class CompendiumExporterApp extends FormApplication {
       context.adventureMapping = 'Adventure' === context.pack.metadata.type;
       context.itemMapping = 'Item' === context.pack.metadata.type;
       context.canCustomizeMapping = context.actorMapping || context.adventureMapping || context.itemMapping;
+      context.selectedFileName = this.selectedFile?.name;
     }
 
     context.babeleActive = game?.babele?.initialized;
@@ -72,6 +74,15 @@ export class CompendiumExporterApp extends FormApplication {
     html.find('[data-remove-mapping]').click(this._onRemoveMapping.bind(this));
     html.find('[data-export]').click(this._onExport.bind(this));
     html.find('[data-cancel]').click(this._onCancelChoice.bind(this));
+    html.find('[data-unselect-file]').click(this._onUnselectFile.bind(this));
+  }
+
+  async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
+    if (event.currentTarget?.files && event.currentTarget.files[0]) {
+      this.selectedFile = event.currentTarget.files[0];
+    }
+
+    await super._onSubmit(event, { updateData, preventClose, preventRender });
   }
 
   _onDrop(e) {
@@ -124,9 +135,10 @@ export class CompendiumExporterApp extends FormApplication {
 
   async _onExport(e) {
     e.preventDefault();
+
     const pack = this._getPack();
     if (null !== pack) {
-      const exporter = ExporterInstanciator.createForPack(pack, this.object);
+      const exporter = ExporterInstanciator.createForPack(pack, this.object, this.selectedFile);
 
       await exporter.export();
     }
@@ -137,6 +149,14 @@ export class CompendiumExporterApp extends FormApplication {
 
     this.packId = null;
     this.object = foundry.utils.duplicate(this.defaultExportOptions);
+
+    this.render();
+  }
+
+  _onUnselectFile(e) {
+    e.preventDefault();
+
+    this.selectedFile = null;
 
     this.render();
   }

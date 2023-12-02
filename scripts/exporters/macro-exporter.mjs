@@ -11,7 +11,10 @@ export class MacroExporter extends AbstractExporter {
     const documents = await this.pack.getIndex({ fields: ['command'] });
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = MacroExporter.getDocumentData(indexDocument);
+      this.dataset.entries[indexDocument.name] = foundry.utils.mergeObject(
+        MacroExporter.getDocumentData(indexDocument),
+        this.existingContent[indexDocument.name] ?? {},
+      );
 
       this._stepProgressBar();
     }

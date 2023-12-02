@@ -31,31 +31,43 @@ export class AdventureExporter extends AbstractExporter {
 
     // Scenes
     for (const document of avPack.scenes) {
-      this.dataset.entries[avPack.name].scenes[document.name] = exporters.SceneExporter.getDocumentData(document, document);
+      this.dataset.entries[avPack.name].scenes[document.name] = foundry.utils.mergeObject(
+        exporters.SceneExporter.getDocumentData(document, document),
+        (this.existingContent[avPack.name]?.scenes ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }
 
     // Macros
     for (const document of avPack.macros) {
-      this.dataset.entries[avPack.name].macros[document.name] = exporters.MacroExporter.getDocumentData(document);
+      this.dataset.entries[avPack.name].macros[document.name] = foundry.utils.mergeObject(
+        exporters.MacroExporter.getDocumentData(document),
+        (this.existingContent[avPack.name]?.macros ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }
 
     // Playlists
     for (const document of avPack.playlists) {
-      this.dataset.entries[avPack.name].playlists[document.name] = exporters.PlaylistExporter.getDocumentData(document, document);
+      this.dataset.entries[avPack.name].playlists[document.name] = foundry.utils.mergeObject(
+        exporters.PlaylistExporter.getDocumentData(document, document),
+        (this.existingContent[avPack.name]?.playlists ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }
 
     // Actors
     for (const document of avPack.actors) {
-      this.dataset.entries[avPack.name].actors[document.name] = exporters.ActorExporter.getDocumentData(
-        document,
-        document,
-        this.options.customMapping.actor,
+      this.dataset.entries[avPack.name].actors[document.name] = foundry.utils.mergeObject(
+        exporters.ActorExporter.getDocumentData(
+          document,
+          document,
+          this.options.customMapping.actor,
+        ),
+        (this.existingContent[avPack.name]?.actors ?? {})[document.name] ?? {},
       );
 
       this._stepProgressBar();
@@ -63,9 +75,12 @@ export class AdventureExporter extends AbstractExporter {
 
     // Items
     for (const document of avPack.items) {
-      this.dataset.entries[avPack.name].items[document.name] = exporters.ItemExporter.getDocumentData(
-        document,
-        this.options.customMapping.item,
+      this.dataset.entries[avPack.name].items[document.name] = foundry.utils.mergeObject(
+        exporters.ItemExporter.getDocumentData(
+          document,
+          this.options.customMapping.item,
+        ),
+        (this.existingContent[avPack.name]?.items ?? {})[document.name] ?? {},
       );
 
       this._stepProgressBar();
@@ -73,28 +88,37 @@ export class AdventureExporter extends AbstractExporter {
 
     // Tables
     for (const document of avPack.tables) {
-      this.dataset.entries[avPack.name].tables[document.name] = exporters.RollTableExporter.getDocumentData(document, document);
+      this.dataset.entries[avPack.name].tables[document.name] = foundry.utils.mergeObject(
+        exporters.RollTableExporter.getDocumentData(document, document),
+        (this.existingContent[avPack.name]?.tables ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }
 
     // Folders
     for (const { name } of avPack.folders) {
-      this.dataset.entries[avPack.name].folders[name] = name;
+      this.dataset.entries[avPack.name].folders[name] = (this.existingContent[avPack.name]?.folders ?? {})[name] ?? name;
 
       this._stepProgressBar();
     }
 
     // Journals
     for (const document of avPack.journal) {
-      this.dataset.entries[avPack.name].journals[document.name] = exporters.JournalEntryExporter.getDocumentData(document, document);
+      this.dataset.entries[avPack.name].journals[document.name] = foundry.utils.mergeObject(
+        exporters.JournalEntryExporter.getDocumentData(document, document),
+        (this.existingContent[avPack.name]?.journals ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }
 
     // Cards
     for (const document of avPack.cards) {
-      this.dataset.entries[avPack.name].cards[document.name] = exporters.CardsExporter.getDocumentData(document, document);
+      this.dataset.entries[avPack.name].cards[document.name] = foundry.utils.mergeObject(
+        exporters.CardsExporter.getDocumentData(document, document),
+        (this.existingContent[avPack.name]?.cards ?? {})[document.name] ?? {},
+      );
 
       this._stepProgressBar();
     }

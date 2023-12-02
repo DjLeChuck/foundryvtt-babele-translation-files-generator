@@ -48,9 +48,12 @@ export class JournalEntryExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = JournalEntryExporter.getDocumentData(
-        indexDocument,
-        await this.pack.getDocument(indexDocument._id),
+      this.dataset.entries[indexDocument.name] = foundry.utils.mergeObject(
+        JournalEntryExporter.getDocumentData(
+          indexDocument,
+          await this.pack.getDocument(indexDocument._id),
+        ),
+        this.existingContent[indexDocument.name] ?? {},
       );
 
       this._stepProgressBar();

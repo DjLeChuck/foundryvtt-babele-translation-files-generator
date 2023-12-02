@@ -45,6 +45,21 @@
     </div>
   {{/if}}
   <div class="form-group">
+    <label for="existingFile">{{localize "BTFG.CompendiumExporter.UseExistingFile"}}</label>
+    <input type="file" id="existingFile" name="existingFile" accept=".json" />
+    {{#if selectedFileName}}
+      <div class="form-group">
+        <p>{{localize "BTFG.CompendiumExporter.SelectedFile"}} <strong>{{selectedFileName}}</strong></p>
+        <p>
+          <button type="button" data-unselect-file>
+            <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.UnselectExistingFile"}}
+          </button>
+        </p>
+      </div>
+    {{/if}}
+    <p class="notes">{{localize "BTFG.CompendiumExporter.UseExistingFileHint"}}</p>
+  </div>
+  <div class="form-group">
     <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
     <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked object.sortEntries}} />
   </div>

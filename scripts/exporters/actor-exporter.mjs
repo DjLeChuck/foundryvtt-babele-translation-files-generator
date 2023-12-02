@@ -27,7 +27,7 @@ export class ActorExporter extends AbstractExporter {
     });
 
     for (const indexDocument of documents) {
-      const documentData = ActorExporter.getDocumentData(
+      let documentData = ActorExporter.getDocumentData(
         indexDocument,
         await this.pack.getDocument(indexDocument._id),
         this.options.customMapping.actor,
@@ -44,6 +44,8 @@ export class ActorExporter extends AbstractExporter {
           documentData.items[name] = { name };
         }
       }
+
+      documentData = foundry.utils.mergeObject(documentData, this.existingContent[indexDocument.name] ?? {});
 
       this._stepProgressBar();
     }

@@ -14,13 +14,15 @@ export class AbstractExporter {
   progessMessage;
   progressTotalElements;
 
-  constructor(pack, options) {
+  constructor(pack, options, existingFile) {
     if (this.constructor === AbstractExporter) {
       throw new TypeError('Abstract class "AbstractExporter" cannot be instantiated directly');
     }
 
     this.options = options;
     this.pack = pack;
+    this.existingFile = existingFile;
+    this.existingContent = {};
     this.dataset.label = pack.metadata.label;
     this.progessNbImported = 0;
     this.progessMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
@@ -32,6 +34,7 @@ export class AbstractExporter {
 
     this._startProgressBar();
 
+    await this._processExistingEntries();
     await this._processCustomMapping();
     await this._processDataset();
 
@@ -42,6 +45,25 @@ export class AbstractExporter {
     this._endProgressBar();
 
     this._downloadFile();
+  }
+
+  async _processExistingEntries() {
+    if (!this.existingFile) {
+      return;
+    }
+
+    try {
+      const jsonString = await readTextFromFile(this.existingFile);
+      const json = JSON.parse(jsonString);
+
+      if (!json?.entries) {
+        return ui.notifications.error('No entries in the given file {name}');
+      }
+
+      this.existingContent = json.entries;
+    } catch (err) {
+      return ui.notifications.error('No entries in the given file {name}');
+    }
   }
 
   async _processCustomMapping() {

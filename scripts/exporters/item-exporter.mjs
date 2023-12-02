@@ -16,9 +16,12 @@ export class ItemExporter extends AbstractExporter {
     });
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = ItemExporter.getDocumentData(
-        indexDocument,
-        this.options.customMapping.item,
+      this.dataset.entries[indexDocument.name] = foundry.utils.mergeObject(
+        ItemExporter.getDocumentData(
+          indexDocument,
+          this.options.customMapping.item,
+        ),
+        this.existingContent[indexDocument.name] ?? {},
       );
 
       this._stepProgressBar();

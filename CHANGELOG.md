@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Ability to give an existing JSON file in order to update it’s content with new translations only
+
 ## [1.0.1] - 2023-11-11
 
 ### Added
