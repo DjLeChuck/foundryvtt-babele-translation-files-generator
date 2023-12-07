@@ -83,6 +83,8 @@ export class CompendiumExporterApp extends FormApplication {
   async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
     if (event.currentTarget?.files && event.currentTarget.files[0]) {
       this.selectedFile = event.currentTarget.files[0];
+
+      await this._loadFileMapping();
     }
 
     await super._onSubmit(event, { updateData, preventClose, preventRender });
@@ -107,7 +109,7 @@ export class CompendiumExporterApp extends FormApplication {
 
     const { currentTarget: { dataset: { addMapping: type } } } = e;
 
-    this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = { key: '', value: '' };
+    this._addCustomMappingEntry(type, { key: '', value: '' });
 
     await this._savePackMapping();
 
@@ -208,5 +210,42 @@ export class CompendiumExporterApp extends FormApplication {
     savedMapping[this.packId.replace('.', '-')] = this.object.customMapping;
 
     await game.settings.set(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING, savedMapping);
+  }
+
+  async _loadFileMapping() {
+    try {
+      const jsonString = await readTextFromFile(this.selectedFile);
+      const json = JSON.parse(jsonString);
+
+      if (!json?.mapping) {
+        return;
+      }
+
+      if (json.mapping?.actors) {
+        for (const [key, value] of Object.entries(json.mapping.actors)) {
+          this._addCustomMappingEntry('actor', { key, value });
+        }
+      }
+
+      if (json.mapping?.items) {
+        for (const [key, value] of Object.entries(json.mapping.items)) {
+          this._addCustomMappingEntry('item', { key, value });
+        }
+      }
+
+      await this._savePackMapping();
+
+      this.render();
+    } catch (err) {
+      ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
+        name: this.selectedFile.name,
+      }));
+
+      console.error(err);
+    }
+  }
+
+  _addCustomMappingEntry(type, entry) {
+    this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = entry;
   }
 }

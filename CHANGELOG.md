@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Merge custom mapping on existing JSON file loading
+
 ### Fixed
 
 - Only the first adventure of a compendium is exported

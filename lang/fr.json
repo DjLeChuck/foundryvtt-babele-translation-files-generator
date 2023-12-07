@@ -30,5 +30,7 @@
   "BTFG.ExportCompendiumFile": "Exporter le fichier de traduction",
   "BTFG.CompendiumExporter.ActorMapping": "Mapping des acteurs",
   "BTFG.CompendiumExporter.ItemMapping": "Mapping des objets",
-  "BTFG.Errors.CanNotGenerateModule": "Une erreur est survenue lors de la génération du module. Merci de regarder les logs en console pour plus d’informations."
+  "BTFG.Errors.CanNotGenerateModule": "Une erreur est survenue lors de la génération du module. Merci de regarder les logs en console pour plus d’informations.",
+  "BTFG.Errors.CanNotReadFile": "Impossible de lire le fichier {name}",
+  "BTFG.Errors.NoEntriesInFile": "Aucune entrées dans le fichier {name}"
 }

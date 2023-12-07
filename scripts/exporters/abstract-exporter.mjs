@@ -67,12 +67,16 @@ export class AbstractExporter {
       const json = JSON.parse(jsonString);
 
       if (!json?.entries) {
-        return ui.notifications.error('No entries in the given file {name}');
+        return ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotGenerateModule', {
+          name: this.existingFile.name,
+        }));
       }
 
       this.existingContent = json.entries;
     } catch (err) {
-      return ui.notifications.error('No entries in the given file {name}');
+      return ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
+        name: this.existingFile.name,
+      }));
     }
   }
 
