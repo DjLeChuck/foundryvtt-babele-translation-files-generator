@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.2.0] - 2023-12-07
+
 ### Added
 
 - Merge custom mapping on existing JSON file loading
@@ -34,7 +36,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.1.1...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.0...main
+
+[1.2.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.1.1...1.2.0
 
 [1.1.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.1.0...1.1.1
 
