@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Only the first adventure of a compendium is exported
+
 ## [1.1.1] - 2023-12-02
 
 ### Fixed
