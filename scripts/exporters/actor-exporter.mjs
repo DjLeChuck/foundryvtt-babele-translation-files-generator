@@ -2,17 +2,17 @@ import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class ActorExporter extends AbstractExporter {
   static getDocumentData(indexDocument, document, customMapping) {
-    const { name, prototypeToken: { name: tokenName } = {} } = indexDocument;
-    const documentData = { name, tokenName: tokenName ?? name };
+    const documentData = {
+      name: indexDocument.name,
+      description: document.system && document.system.description ? document.system.description.value : "", // Check for existence
+      items: document.items.map(item => ({
+          id: item._id,
+          name: item.name,
+          description: item.system && item.system.description ? item.system.description.value : "" // Check for existence
+      }))
+  };
 
-    if (AbstractExporter._hasContent(document.items)) {
-      documentData.items = {};
-
-      for (const { name } of document.items) {
-        documentData.items[name] = { name };
-      }
-    }
-
+    // This integrates any custom mapping fields you might have
     AbstractExporter._addCustomMapping(customMapping, indexDocument, documentData);
 
     return documentData;
@@ -22,32 +22,36 @@ export class ActorExporter extends AbstractExporter {
     const documents = await this.pack.getIndex({
       fields: [
         'prototypeToken.name',
+        'system.description.value', // Ensure you add fields relevant for your custom mapping here
         ...Object.values(this.options.customMapping.actor).map((mapping) => mapping.value),
       ],
     });
 
     for (const indexDocument of documents) {
-      let documentData = ActorExporter.getDocumentData(
-        indexDocument,
-        await this.pack.getDocument(indexDocument._id),
-        this.options.customMapping.actor,
-      );
+        const document = await this.pack.getDocument(indexDocument._id);
+        let documentData = ActorExporter.getDocumentData(
+            indexDocument,
+            document,
+            this.options.customMapping.actor,
+        );
 
-      this.dataset.entries[indexDocument.name] = documentData;
-
-      const document = await this.pack.getDocument(indexDocument._id);
-
-      if (document.items.size) {
-        documentData.items = {};
-
-        for (const { name } of document.items) {
-          documentData.items[name] = { name };
+        // Processing items with detailed information
+        if (document.items.size) {
+            documentData.items = document.items.map(item => ({
+                id: item._id,
+                name: item.name,
+                description: item.system.description.value // Ensure correct path based on your data structure
+            }));
         }
-      }
 
-      documentData = foundry.utils.mergeObject(documentData, this.existingContent[indexDocument.name] ?? {});
+        // Apply custom mappings here if needed. Modify or extend documentData based on custom rules
 
-      this._stepProgressBar();
+        documentData = foundry.utils.mergeObject(documentData, this.existingContent[indexDocument.name] ?? {});
+
+        this.dataset.entries[indexDocument.name] = documentData;
+
+        this._stepProgressBar();
     }
   }
+
 }

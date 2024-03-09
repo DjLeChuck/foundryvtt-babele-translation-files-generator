@@ -125,7 +125,7 @@ export class AbstractExporter {
   static _hasContent(dataset) {
     return Array.isArray(dataset) ? dataset.length : dataset.size;
   }
-
+/*
   _getStringifiedDataset() {
     return JSON.stringify(this.dataset, null, 2);
   }
@@ -135,6 +135,21 @@ export class AbstractExporter {
 
     saveDataToFile(this._getStringifiedDataset(), 'text/json', `${this.pack.metadata.id}.json`);
   }
+*/
+
+  _downloadFile() {
+    ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
+
+    // Serialize the transformed dataset to JSON
+    const jsonData = JSON.stringify(this.dataset, null, 2);
+
+    // Define the filename based on some unique attribute, like the pack's metadata ID
+    const filename = `${this.pack.metadata.id}-exported.json`;
+
+    // Use FileSaver (or Foundry's file handling API) to save the JSON data to a file
+    saveDataToFile(jsonData, 'text/json', `${this.pack.metadata.id}.json`); // Adjust this to match the actual API you're using
+  }
+
 
   _sortEntries() {
     this.dataset.entries = Object.keys(this.dataset.entries)
