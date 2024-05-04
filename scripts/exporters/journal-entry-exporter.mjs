@@ -10,10 +10,10 @@ export class JournalEntryExporter extends AbstractExporter {
 
       for (const {
         name,
-        image: { caption },
+        image: { caption } = {},
         src,
-        video: { width, height },
-        text: { content: text }
+        video: { width, height } = {},
+        text: { content: text } = {}
       } of document.pages) {
         const pageData = { name };
 
