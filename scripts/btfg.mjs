@@ -1,3 +1,5 @@
+import '../scss/btfg.scss';
+
 import { CompendiumExporterApp } from './app/compendium-exporter-app.mjs';
 import { registerHandlebarsHelper } from './helpers/handlebars.mjs';
 import { registerTemplates } from './helpers/templates.mjs';

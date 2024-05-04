@@ -16,10 +16,10 @@
     "verified": "11"
   },
   "esmodules": [
-    "assets/js/btfg.js"
+    "assets/btfg.js"
   ],
   "styles": [
-    "assets/css/btfg.css"
+    "assets/btfg.css"
   ],
   "languages": [
     {
