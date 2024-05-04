@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.2.1] - 2024-05-04
+
 ### Fixed
 
 - Handle JournalEntry without optional keys
@@ -40,7 +42,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.0...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.1...main
+
+[1.2.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.0...1.2.1
 
 [1.2.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.1.1...1.2.0
 
