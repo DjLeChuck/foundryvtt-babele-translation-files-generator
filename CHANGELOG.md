@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+[12.0.0] - 2024-05-28
+
+### Changed
+
+- Replace deprecated handlebar function `{select}` with `{selectOptions}`
+
+### Fixed
+
+- Getting available locales
+
 ## [1.2.1] - 2024-05-04
 
 ### Fixed
@@ -42,7 +52,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.1...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.0.0...main
+
+[12.0.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.1...12.0.0
 
 [1.2.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.0...1.2.1
 
