@@ -64,7 +64,12 @@ export class CompendiumExporterApp extends FormApplication {
       context.selectedFileName = this.selectedFile?.name;
     }
 
-    context.availableLocales = game.settings.settings.get('core.language').choices;
+    if (foundry.utils.isNewerVersion(game.version, 12)) {
+      context.availableLocales = game.settings.settings.get('core.language').type.choices;
+    } else {
+      context.availableLocales = game.settings.settings.get('core.language').choices;
+    }
+
     context.babeleActive = game?.babele?.initialized;
 
     return context;

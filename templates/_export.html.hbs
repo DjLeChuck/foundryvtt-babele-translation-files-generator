@@ -71,11 +71,7 @@
     <div class="form-group">
       <label for="translationLocale">{{localize "BTFG.CompendiumExporter.TranslationLocale"}}</label>
       <select id="translationLocale" name="translationLocale">
-        {{#select object.translationLocale}}
-          {{#each availableLocales as |name k|}}
-            <option value="{{k}}">{{localize name}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions availableLocales selected=object.translationLocale}}
       </select>
     </div>
   {{/if}}
