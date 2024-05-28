@@ -4,6 +4,10 @@
 
 [12.0.0] - 2024-05-28
 
+### Added
+
+- Support for FoundryVTT v12
+
 ### Changed
 
 - Replace deprecated handlebar function `{select}` with `{selectOptions}`
