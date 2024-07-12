@@ -15,6 +15,8 @@
   "BTFG.CompendiumExporter.CustomMappingHint": "(premier champ : clef utilisée dans le fichier de traduction ; second champ : chemin d’accès à la donnée dans le document)",
   "BTFG.CompendiumExporter.RemoveCustomMapping": "Supprimer",
   "BTFG.CompendiumExporter.AddCustomMapping": "Ajouter",
+  "BTFG.CompendiumExporter.ExportCustomMapping": "Exporter le mapping personnalisé",
+  "BTFG.CompendiumExporter.ImportCustomMapping": "Importer un mapping personnalisé",
   "BTFG.CompendiumExporter.UseExistingFile": "Fichier de traduction existant",
   "BTFG.CompendiumExporter.UseExistingFileHint": "Permet de mettre à jour un fichier de traduction déjà existant afin d’y ajouter uniquement les nouvelles entrées",
   "BTFG.CompendiumExporter.SelectedFile": "Fichier sélectionné :",

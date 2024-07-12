@@ -10,6 +10,17 @@
     </div>
   </div>
 {{/each}}
-<button type="button" data-add-mapping="{{type}}">
-  <i class="fa fa-add"></i> {{localize "BTFG.CompendiumExporter.AddCustomMapping"}}
-</button>
+<div class="mapping-actions">
+  <button type="button" data-add-mapping="{{type}}">
+    <i class="fa fa-add"></i> {{localize "BTFG.CompendiumExporter.AddCustomMapping"}}
+  </button>
+  <button type="button" class="small" data-export-mapping
+          data-tooltip="{{localize "BTFG.CompendiumExporter.ExportCustomMapping"}}">
+    <i class="fa fa-save"></i>
+  </button>
+  <button type="button" class="small" data-import-mapping
+          data-tooltip="{{localize "BTFG.CompendiumExporter.ImportCustomMapping"}}">
+    <i class="fa fa-upload"></i>
+  </button>
+  <input id="import-custom-mapping-input" type="file" class="d-none" accept=".json" />
+</div>

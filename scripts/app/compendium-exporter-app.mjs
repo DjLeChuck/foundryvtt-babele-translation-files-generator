@@ -79,6 +79,8 @@ export class CompendiumExporterApp extends FormApplication {
     super.activateListeners(html);
 
     html.find('[data-add-mapping]').click(this._onAddMapping.bind(this));
+    html.find('[data-export-mapping]').click(this._onExportMapping.bind(this));
+    html.find('[data-import-mapping]').click((e) => this._onImportMapping(e, html));
     html.find('[data-remove-mapping]').click(this._onRemoveMapping.bind(this));
     html.find('[data-export]').click(this._onExport.bind(this));
     html.find('[data-cancel]').click(this._onCancelChoice.bind(this));
@@ -86,7 +88,7 @@ export class CompendiumExporterApp extends FormApplication {
   }
 
   async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
-    if (event.currentTarget?.files && event.currentTarget.files[0]) {
+    if (event.currentTarget?.files && event.currentTarget.files[0] && 'existingFile' === event.currentTarget.id) {
       this.selectedFile = event.currentTarget.files[0];
 
       await this._loadFileMapping();
@@ -119,6 +121,26 @@ export class CompendiumExporterApp extends FormApplication {
     await this._savePackMapping();
 
     this.render();
+  }
+
+  async _onExportMapping(e) {
+    e.preventDefault();
+
+    const data = this.object.customMapping;
+    const pack = this._getPack();
+    const filename = `custom-mapping-${pack.metadata.label}.json`;
+
+    saveDataToFile(JSON.stringify(data, null, 2), 'text/json', filename);
+  }
+
+  async _onImportMapping(e, html) {
+    e.preventDefault();
+
+    const input = html.find('#import-custom-mapping-input');
+    input.off('change', this._overrideCustomMapping.bind(this));
+    input.on('change', this._overrideCustomMapping.bind(this));
+
+    input.click();
   }
 
   async _onRemoveMapping(e) {
@@ -252,5 +274,42 @@ export class CompendiumExporterApp extends FormApplication {
 
   _addCustomMappingEntry(type, entry) {
     this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = entry;
+  }
+
+  async _overrideCustomMapping(e) {
+    e.preventDefault();
+
+    if (!e.currentTarget?.files || !e.currentTarget.files[0] || 'import-custom-mapping-input' !== e.currentTarget.id) {
+      return;
+    }
+
+    const file = e.currentTarget.files[0];
+
+    try {
+      const jsonString = await readTextFromFile(file);
+      const json = JSON.parse(jsonString);
+
+      if (json?.actor) {
+        for (const { key, value } of Object.values(json.actor)) {
+          this._addCustomMappingEntry('actor', { key, value });
+        }
+      }
+
+      if (json?.item) {
+        for (const { key, value } of Object.values(json.item)) {
+          this._addCustomMappingEntry('item', { key, value });
+        }
+      }
+
+      await this._savePackMapping();
+
+      this.render();
+    } catch (err) {
+      ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
+        name: file.name,
+      }));
+
+      console.error(err);
+    }
   }
 }

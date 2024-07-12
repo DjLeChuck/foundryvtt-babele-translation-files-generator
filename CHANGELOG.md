@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Ability to export/import custom mapping files
+
 [12.0.0] - 2024-05-28
 
 ### Added
