@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+[12.1.0] - 2024-07-12
+
 ### Added
 
 - Ability to export/import custom mapping files
@@ -60,7 +62,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.0.0...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.1.0...main
+
+[12.1.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.1.0...12.0.0
 
 [12.0.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.1...12.0.0
 
