@@ -81,6 +81,7 @@ export class AbstractExporter {
 
       this.existingContent = json.entries;
       this.existingFolders = json.folders ?? {};
+      this.dataset.label = json.label ?? this.dataset.label;
     } catch (err) {
       return ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
         name: this.existingFile.name,
