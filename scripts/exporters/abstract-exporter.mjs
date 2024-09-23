@@ -30,6 +30,7 @@ export class AbstractExporter {
     this.pack = pack;
     this.existingFile = existingFile;
     this.existingContent = {};
+    this.existingFolders = {};
     this.dataset.label = pack.metadata.label;
     this.progessNbImported = 0;
     this.progessMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
@@ -79,6 +80,7 @@ export class AbstractExporter {
       }
 
       this.existingContent = json.entries;
+      this.existingFolders = json.folders ?? {};
     } catch (err) {
       return ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
         name: this.existingFile.name,
@@ -121,7 +123,7 @@ export class AbstractExporter {
   async _processFolders() {      
     this.pack.folders.forEach((folder) => {
       const name = folder.name;
-      this.dataset.folders[name] = name;
+      this.dataset.folders[name] = this.existingFolders[name] ?? name
     });
   }
 
