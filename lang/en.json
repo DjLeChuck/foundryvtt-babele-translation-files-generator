@@ -22,6 +22,7 @@
   "BTFG.CompendiumExporter.SelectedFile": "Selected file:",
   "BTFG.CompendiumExporter.UnselectExistingFile": "Cancel",
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort entries alphabetically",
+  "BTFG.CompendiumExporter.SortFoldersAlpha": "Sort folders alphabetically",
   "BTFG.CompendiumExporter.GenerateModule": "Generate a Foundry module template",
   "BTFG.CompendiumExporter.TranslationLocale": "Translation locale",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
