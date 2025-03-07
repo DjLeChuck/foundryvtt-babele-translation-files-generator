@@ -33,7 +33,7 @@ export class ActorExporter extends AbstractExporter {
         this.options.customMapping.actor,
       );
 
-      const key = this.options.useIdAsKey ? indexDocument._id : indexDocument.name;
+      const key = this._getExportKey(indexDocument);
 
       this.dataset.entries[key] = documentData;
 

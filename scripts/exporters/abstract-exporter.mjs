@@ -48,11 +48,11 @@ export class AbstractExporter {
     await this._processFolders();
 
     if (this.options.sortEntries) {
-      this._sortEntries();
+      this.dataset.entries = this._sortItems(this.dataset.entries);
     }
 
     if (this.options.sortFolders) {
-      this._sortFolders();
+      this.dataset.folders = this._sortItems(this.dataset.folders);
     }
 
     this._endProgressBar();
@@ -152,21 +152,12 @@ export class AbstractExporter {
     saveDataToFile(this._getStringifiedDataset(), 'text/json', `${this.pack.metadata.id}.json`);
   }
 
-  _sortEntries() {
-    this.dataset.entries = Object.keys(this.dataset.entries)
+  _sortItems(items) {
+    return Object.keys(items)
       .sort()
       .reduce((acc, key) => ({
         ...acc,
-        [key]: this.dataset.entries[key],
-      }), {});
-  }
-
-  _sortFolders() {
-    this.dataset.folders = Object.keys(this.dataset.folders)
-      .sort()
-      .reduce((acc, key) => ({
-        ...acc,
-        [key]: this.dataset.folders[key],
+        [key]: items[key],
       }), {});
   }
 
