@@ -26,7 +26,7 @@ Hooks.on('init', () => {
 
 function autoRegisterBabel() {
   if (typeof Babele !== 'undefined') {
-    Babele.get().register({
+    game.babele.register({
       module: MODULE_ID,
       lang: '##LOCALE##',
       dir: 'compendium/##LOCALE##',
