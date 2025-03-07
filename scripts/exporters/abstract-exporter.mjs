@@ -205,4 +205,8 @@ export class AbstractExporter {
   _endProgressBar() {
     SceneNavigation.displayProgressBar({ label: this.progressMessage, pct: 100 });
   }
+
+  _getExportKey(document) {
+    return this.options.useIdAsKey ? document._id : document.name;
+  }
 }

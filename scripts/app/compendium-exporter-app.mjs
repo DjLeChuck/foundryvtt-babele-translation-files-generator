@@ -314,8 +314,4 @@ export class CompendiumExporterApp extends FormApplication {
       console.error(err);
     }
   }
-
-  _getExportKey(document) {
-    return this.options.useIdAsKey ? document._id : document.name;
-  }
 }
