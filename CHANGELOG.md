@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Added
+
+- Ability to sort compendium folders
+
+### Changed
+
+- Use the new Babele loading method to avoid deprecation notice
+
+### Fixed
+
+- Scene export was not working when a drawing or a note without text was inside
+
 [12.1.0] - 2024-07-12
 
 ### Added
