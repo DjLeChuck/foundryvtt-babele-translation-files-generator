@@ -14,14 +14,15 @@ export class ItemExporter extends AbstractExporter {
     const documents = await this.pack.getIndex({
       fields: [...Object.values(this.options.customMapping.item).map((mapping) => mapping.value)],
     });
-
-    for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = foundry.utils.mergeObject(
+    
+    for (const indexDocument of documents) {     
+      const key = this.options.useIdAsKey ? indexDocument._id : indexDocument.name;
+      this.dataset.entries[key] = foundry.utils.mergeObject(
         ItemExporter.getDocumentData(
           indexDocument,
           this.options.customMapping.item,
         ),
-        this.existingContent[indexDocument.name] ?? {},
+        this.existingContent[key] ?? {},
       );
 
       this._stepProgressBar();

@@ -32,12 +32,13 @@ export class SceneExporter extends AbstractExporter {
     const documents = await this.pack.getIndex();
 
     for (const indexDocument of documents) {
-      this.dataset.entries[indexDocument.name] = foundry.utils.mergeObject(
+      const key = this.options.useIdAsKey ? indexDocument._id : indexDocument.name;
+      this.dataset.entries[key] = foundry.utils.mergeObject(
         SceneExporter.getDocumentData(
           indexDocument,
           await this.pack.getDocument(indexDocument._id),
         ),
-        this.existingContent[indexDocument.name] ?? {},
+        this.existingContent[key] ?? {},
       );
 
       this._stepProgressBar();

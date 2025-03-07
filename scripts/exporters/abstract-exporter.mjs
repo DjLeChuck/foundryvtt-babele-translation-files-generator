@@ -9,6 +9,7 @@ export class AbstractExporter {
   dataset = {
     label: '',
     mapping: {},
+    folders: {},
     entries: {},
   };
   /**
@@ -29,6 +30,7 @@ export class AbstractExporter {
     this.pack = pack;
     this.existingFile = existingFile;
     this.existingContent = {};
+    this.existingFolders = {};
     this.dataset.label = pack.metadata.label;
     this.progessNbImported = 0;
     this.progessMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
@@ -43,9 +45,14 @@ export class AbstractExporter {
     await this._processExistingEntries();
     await this._processCustomMapping();
     await this._processDataset();
+    await this._processFolders();
 
     if (this.options.sortEntries) {
       this._sortEntries();
+    }
+
+    if (this.options.sortFolders) {
+      this._sortFolders();
     }
 
     this._endProgressBar();
@@ -73,6 +80,8 @@ export class AbstractExporter {
       }
 
       this.existingContent = json.entries;
+      this.existingFolders = json.folders ?? {};
+      this.dataset.label = json.label ?? this.dataset.label;
     } catch (err) {
       return ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
         name: this.existingFile.name,
@@ -112,6 +121,13 @@ export class AbstractExporter {
     throw new Error('You must implement this function');
   }
 
+  async _processFolders() {      
+    this.pack.folders.forEach((folder) => {
+      const name = folder.name;
+      this.dataset.folders[name] = this.existingFolders[name] ?? name
+    });
+  }
+
   static _addCustomMapping(customMapping, indexDocument, documentData) {
     const flattenDocument = foundry.utils.flattenObject(indexDocument);
 
@@ -142,6 +158,15 @@ export class AbstractExporter {
       .reduce((acc, key) => ({
         ...acc,
         [key]: this.dataset.entries[key],
+      }), {});
+  }
+
+  _sortFolders(){
+    this.dataset.folders = Object.keys(this.dataset.folders)
+      .sort()
+      .reduce((acc, key) => ({
+        ...acc,
+        [key]: this.dataset.folders[key],
       }), {});
   }
 

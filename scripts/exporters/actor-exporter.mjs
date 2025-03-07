@@ -33,7 +33,9 @@ export class ActorExporter extends AbstractExporter {
         this.options.customMapping.actor,
       );
 
-      this.dataset.entries[indexDocument.name] = documentData;
+      const key = this.options.useIdAsKey ? indexDocument._id : indexDocument.name;
+
+      this.dataset.entries[key] = documentData;
 
       const document = await this.pack.getDocument(indexDocument._id);
 
@@ -45,7 +47,7 @@ export class ActorExporter extends AbstractExporter {
         }
       }
 
-      documentData = foundry.utils.mergeObject(documentData, this.existingContent[indexDocument.name] ?? {});
+      documentData = foundry.utils.mergeObject(documentData, this.existingContent[key] ?? {});
 
       this._stepProgressBar();
     }
