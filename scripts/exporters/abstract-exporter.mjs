@@ -17,8 +17,8 @@ export class AbstractExporter {
    */
   pack;
 
-  progessNbImported;
-  progessMessage;
+  progressNbImported;
+  progressMessage;
   progressTotalElements;
 
   constructor(pack, options, existingFile) {
@@ -32,8 +32,8 @@ export class AbstractExporter {
     this.existingContent = {};
     this.existingFolders = {};
     this.dataset.label = pack.metadata.label;
-    this.progessNbImported = 0;
-    this.progessMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
+    this.progressNbImported = 0;
+    this.progressMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
     this.progressTotalElements = pack.index.size;
   }
 
@@ -121,10 +121,10 @@ export class AbstractExporter {
     throw new Error('You must implement this function');
   }
 
-  async _processFolders() {      
+  async _processFolders() {
     this.pack.folders.forEach((folder) => {
       const name = folder.name;
-      this.dataset.folders[name] = this.existingFolders[name] ?? name
+      this.dataset.folders[name] = this.existingFolders[name] ?? name;
     });
   }
 
@@ -161,7 +161,7 @@ export class AbstractExporter {
       }), {});
   }
 
-  _sortFolders(){
+  _sortFolders() {
     this.dataset.folders = Object.keys(this.dataset.folders)
       .sort()
       .reduce((acc, key) => ({
@@ -199,19 +199,19 @@ export class AbstractExporter {
   }
 
   _startProgressBar() {
-    SceneNavigation.displayProgressBar({ label: this.progessMessage, pct: 1 });
+    SceneNavigation.displayProgressBar({ label: this.progressMessage, pct: 1 });
   }
 
   _stepProgressBar() {
-    ++this.progessNbImported;
+    ++this.progressNbImported;
 
     SceneNavigation.displayProgressBar({
-      label: this.progessMessage,
-      pct: Math.floor(this.progessNbImported * 100 / this.progressTotalElements),
+      label: this.progressMessage,
+      pct: Math.floor(this.progressNbImported * 100 / this.progressTotalElements),
     });
   }
 
   _endProgressBar() {
-    SceneNavigation.displayProgressBar({ label: this.progessMessage, pct: 100 });
+    SceneNavigation.displayProgressBar({ label: this.progressMessage, pct: 100 });
   }
 }
