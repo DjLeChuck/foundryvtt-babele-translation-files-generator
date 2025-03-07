@@ -9,7 +9,7 @@ export class SceneExporter extends AbstractExporter {
       documentData.drawings = {};
 
       for (const { text } of document.drawings) {
-        if (text.length) {
+        if (text?.length) {
           documentData.drawings[text] = text;
         }
       }
@@ -19,7 +19,7 @@ export class SceneExporter extends AbstractExporter {
       documentData.notes = {};
 
       for (const { text } of document.notes) {
-        if (text.length) {
+        if (text?.length) {
           documentData.notes[text] = text;
         }
       }
