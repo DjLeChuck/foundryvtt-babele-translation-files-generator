@@ -6,6 +6,11 @@
 
 - Merged options sort document and folders
 
+### Fixed
+
+- The sorting option was not working with adventures
+- The document ID as key option was not working with adventures
+
 [12.2.0] - 2025-03-07
 
 ### Added

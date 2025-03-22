@@ -31,9 +31,10 @@ export class AdventureExporter extends AbstractExporter {
 
       // Scenes
       for (const document of avPack.scenes) {
-        this.dataset.entries[avPack.name].scenes[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].scenes[key] = foundry.utils.mergeObject(
           exporters.SceneExporter.getDocumentData(document, document),
-          (this.existingContent[avPack.name]?.scenes ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.scenes ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -41,9 +42,10 @@ export class AdventureExporter extends AbstractExporter {
 
       // Macros
       for (const document of avPack.macros) {
-        this.dataset.entries[avPack.name].macros[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].macros[key] = foundry.utils.mergeObject(
           exporters.MacroExporter.getDocumentData(document),
-          (this.existingContent[avPack.name]?.macros ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.macros ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -51,9 +53,10 @@ export class AdventureExporter extends AbstractExporter {
 
       // Playlists
       for (const document of avPack.playlists) {
-        this.dataset.entries[avPack.name].playlists[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].playlists[key] = foundry.utils.mergeObject(
           exporters.PlaylistExporter.getDocumentData(document, document),
-          (this.existingContent[avPack.name]?.playlists ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.playlists ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -61,13 +64,14 @@ export class AdventureExporter extends AbstractExporter {
 
       // Actors
       for (const document of avPack.actors) {
-        this.dataset.entries[avPack.name].actors[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].actors[key] = foundry.utils.mergeObject(
           exporters.ActorExporter.getDocumentData(
             document,
             document,
             this.options.customMapping.actor,
           ),
-          (this.existingContent[avPack.name]?.actors ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.actors ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -75,12 +79,13 @@ export class AdventureExporter extends AbstractExporter {
 
       // Items
       for (const document of avPack.items) {
-        this.dataset.entries[avPack.name].items[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].items[key] = foundry.utils.mergeObject(
           exporters.ItemExporter.getDocumentData(
             document,
             this.options.customMapping.item,
           ),
-          (this.existingContent[avPack.name]?.items ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.items ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -88,9 +93,10 @@ export class AdventureExporter extends AbstractExporter {
 
       // Tables
       for (const document of avPack.tables) {
-        this.dataset.entries[avPack.name].tables[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].tables[key] = foundry.utils.mergeObject(
           exporters.RollTableExporter.getDocumentData(document, document),
-          (this.existingContent[avPack.name]?.tables ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.tables ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -105,9 +111,10 @@ export class AdventureExporter extends AbstractExporter {
 
       // Journals
       for (const document of avPack.journal) {
-        this.dataset.entries[avPack.name].journals[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].journals[key] = foundry.utils.mergeObject(
           exporters.JournalEntryExporter.getDocumentData(document, document),
-          (this.existingContent[avPack.name]?.journals ?? {})[document.name] ?? {},
+          (this.existingContent[avPack.name]?.journals ?? {})[key] ?? {},
         );
 
         this._stepProgressBar();
@@ -115,7 +122,8 @@ export class AdventureExporter extends AbstractExporter {
 
       // Cards
       for (const document of avPack.cards) {
-        this.dataset.entries[avPack.name].cards[document.name] = foundry.utils.mergeObject(
+        const key = this._getExportKey(document);
+        this.dataset.entries[avPack.name].cards[key] = foundry.utils.mergeObject(
           exporters.CardsExporter.getDocumentData(document, document),
           (this.existingContent[avPack.name]?.cards ?? {})[document.name] ?? {},
         );
@@ -127,6 +135,8 @@ export class AdventureExporter extends AbstractExporter {
       for (const key in this.dataset.entries[avPack.name]) {
         if (0 === Object.keys(this.dataset.entries[avPack.name][key]).length) {
           delete this.dataset.entries[avPack.name][key];
+        } else if (this.options.sortEntries && !['name', 'caption', 'description'].includes(key)) {
+          this.dataset.entries[avPack.name][key] = this._sortItems(this.dataset.entries[avPack.name][key]);
         }
       }
     });
