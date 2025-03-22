@@ -4,7 +4,6 @@ import { ExporterInstanciator } from '../exporters/exporter-instanciator.mjs';
 export class CompendiumExporterApp extends FormApplication {
   defaultExportOptions = {
     sortEntries: false,
-    sortFolders: false,
     useIdAsKey: false,
     generateModule: false,
     translationLocale: 'en',

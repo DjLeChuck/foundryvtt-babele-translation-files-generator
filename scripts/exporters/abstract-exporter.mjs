@@ -49,9 +49,6 @@ export class AbstractExporter {
 
     if (this.options.sortEntries) {
       this.dataset.entries = this._sortItems(this.dataset.entries);
-    }
-
-    if (this.options.sortFolders) {
       this.dataset.folders = this._sortItems(this.dataset.folders);
     }
 

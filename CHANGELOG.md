@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Merged options sort document and folders
+
 [12.2.0] - 2025-03-07
 
 ### Added
