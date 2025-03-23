@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+[12.2.1] - 2025-03-06
+
 ### Changed
 
 - Merged options sort document and folders
@@ -85,11 +87,13 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.1.0...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.1...main
 
-[12.2.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.0...12.1.0
+[12.2.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.0...12.2.1
 
-[12.1.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.1.0...12.0.0
+[12.2.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.1.0...12.2.0
+
+[12.1.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.0.0...12.1.0
 
 [12.0.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/1.2.1...12.0.0
 
