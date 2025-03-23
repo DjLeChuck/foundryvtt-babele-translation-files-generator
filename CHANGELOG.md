@@ -2,7 +2,13 @@
 
 ## Unreleased
 
-[12.2.1] - 2025-03-06
+[12.2.2] - 2025-03-23
+
+### Added
+
+- Polish translation, thanks to @Lioheart
+
+[12.2.1] - 2025-03-22
 
 ### Changed
 
@@ -87,7 +93,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.1...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.2...main
+
+[12.2.2]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.1...12.2.2
 
 [12.2.1]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.0...12.2.1
 
