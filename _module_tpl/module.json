@@ -9,8 +9,8 @@
   ],
   "version": "1.0.0",
   "compatibility": {
-    "minimum": "11",
-    "verified": "11"
+    "minimum": 13,
+    "verified": 13.344
   },
   "esmodules": [
     "register.js"

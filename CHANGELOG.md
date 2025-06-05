@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Simplify Babele configuration in template
+
 [12.2.2] - 2025-03-23
 
 ### Added

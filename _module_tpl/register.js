@@ -10,26 +10,16 @@ Hooks.on('init', () => {
     config: true,
     default: true,
     type: Boolean,
-    onChange: value => {
-      if (value) {
-        autoRegisterBabel();
-      }
-
-      window.location.reload();
-    },
+    requiresReload: true,
   });
 
   if (game.settings.get(MODULE_ID, 'autoRegisterBabel')) {
-    autoRegisterBabel();
-  }
-});
-
-function autoRegisterBabel() {
-  if (typeof Babele !== 'undefined') {
-    game.babele.register({
-      module: MODULE_ID,
-      lang: '##LOCALE##',
-      dir: 'compendium/##LOCALE##',
+    Hooks.once('babele.init', (babele) => {
+      babele.register({
+        module: MODULE_ID,
+        lang: '##LOCALE##',
+        dir: 'compendium/##LOCALE##',
+      });
     });
   }
-}
+});
