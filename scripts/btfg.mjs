@@ -2,14 +2,12 @@ import '../scss/btfg.scss';
 
 import { CompendiumExporterApp } from './app/compendium-exporter-app.mjs';
 import { registerHandlebarsHelper } from './helpers/handlebars.mjs';
-import { registerTemplates } from './helpers/templates.mjs';
 import { registerSettings } from './helpers/settings.mjs';
 
 Hooks.on('init', () => {
   console.log('BTFG | Initializing Module');
 
   registerHandlebarsHelper();
-  registerTemplates();
   registerSettings();
 });
 

@@ -51,7 +51,7 @@
       <div class="form-group">
         <p>{{localize "BTFG.CompendiumExporter.SelectedFile"}} <strong>{{selectedFileName}}</strong></p>
         <p>
-          <button type="button" data-unselect-file>
+          <button type="button" data-action="unselectFile">
             <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.UnselectExistingFile"}}
           </button>
         </p>
@@ -80,10 +80,10 @@
     </div>
   {{/if}}
   <footer class="sheet-footer flexrow">
-    <button type="button" data-export>
+    <button type="button" data-action="export">
       <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}
     </button>
-    <button type="button" data-cancel>
+    <button type="button" data-action="cancel">
       <i class="fa fa-cancel"></i> {{localize "BTFG.CompendiumChooser.CancelSelection"}}
     </button>
   </footer>
