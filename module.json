@@ -12,8 +12,8 @@
   ],
   "version": "#{VERSION}#",
   "compatibility": {
-    "minimum": "11",
-    "verified": "12.324"
+    "minimum": 13,
+    "verified": 13.344
   },
   "esmodules": [
     "assets/btfg.js"
