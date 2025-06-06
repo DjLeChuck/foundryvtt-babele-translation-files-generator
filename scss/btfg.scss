@@ -1,6 +1,12 @@
 .compendium-exporter-app {
+  --gap-size: 10px;
+
   .inner-wrapper {
     overflow-y: auto;
+
+    & > div {
+      flex: 1;
+    }
   }
 
   .drop-zone {
@@ -28,12 +34,25 @@
     padding: 5px 0;
   }
 
+  .mapping-fields {
+    gap: var(--gap-size);
+  }
+
   .mapping-actions {
     display: flex;
+    gap: var(--gap-size);
 
-    .small {
-      flex: 0;
+    button {
+      flex: 1;
+
+      &.small {
+        flex: 0;
+      }
     }
+  }
+
+  .footer {
+    gap: var(--gap-size);
   }
 
   .d-none {
