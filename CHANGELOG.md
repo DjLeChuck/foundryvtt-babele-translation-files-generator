@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+[13.0.0] - 2025-06-07
+
+### Added
+
+- Support for FoundryVTT 13 🚀
+
 ### Changed
 
 - Simplify Babele configuration in template
@@ -97,7 +103,9 @@
 
 - Initial version of the module.
 
-[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.2...main
+[Unreleased]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/13.0.0...main
+
+[13.0.0]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.2...13.0.0
 
 [12.2.2]: https://github.com/DjLeChuck/foundryvtt-babele-translation-files-generator/compare/12.2.1...12.2.2
 

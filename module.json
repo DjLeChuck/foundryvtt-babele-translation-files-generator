@@ -1,6 +1,6 @@
 {
   "id": "babele-translation-files-generator",
-  "title": "Translation files generator for Babele",
+  "title": "[BTFG] Babele Translation Files Generator",
   "description": "Generate translation file for Babele by selecting a valid Compendium.",
   "authors": [
     {
@@ -13,7 +13,7 @@
   "version": "#{VERSION}#",
   "compatibility": {
     "minimum": 13,
-    "verified": 13.344
+    "verified": 13.345
   },
   "esmodules": [
     "assets/btfg.js"
