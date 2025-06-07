@@ -17,6 +17,7 @@ export class AbstractExporter {
    */
   pack;
 
+  _progress;
   progressNbImported;
   progressMessage;
   progressTotalElements;
@@ -67,7 +68,7 @@ export class AbstractExporter {
     }
 
     try {
-      const jsonString = await readTextFromFile(this.existingFile);
+      const jsonString = await foundry.utils.readTextFromFile(this.existingFile);
       const json = JSON.parse(jsonString);
 
       if (!json?.entries) {
@@ -146,7 +147,7 @@ export class AbstractExporter {
   _downloadFile() {
     ui.notifications.info(game.i18n.localize('BTFG.Exporter.ExportFinished'));
 
-    saveDataToFile(this._getStringifiedDataset(), 'text/json', `${this.pack.metadata.id}.json`);
+    foundry.utils.saveDataToFile(this._getStringifiedDataset(), 'text/json', `${this.pack.metadata.id}.json`);
   }
 
   _sortItems(items) {
@@ -187,20 +188,23 @@ export class AbstractExporter {
   }
 
   _startProgressBar() {
-    SceneNavigation.displayProgressBar({ label: this.progressMessage, pct: 1 });
+    this._progress = ui.notifications.info(this.progressMessage, { progress: true });
   }
 
   _stepProgressBar() {
     ++this.progressNbImported;
 
-    SceneNavigation.displayProgressBar({
-      label: this.progressMessage,
-      pct: Math.floor(this.progressNbImported * 100 / this.progressTotalElements),
+    this._progress.update({
+      message: this.progressMessage,
+      pct: this.progressNbImported / this.progressTotalElements,
     });
   }
 
   _endProgressBar() {
-    SceneNavigation.displayProgressBar({ label: this.progressMessage, pct: 100 });
+    this._progress.update({
+      message: this.progressMessage,
+      pct: 1.0,
+    });
   }
 
   _getExportKey(document) {
