@@ -11,39 +11,33 @@
   </strong>
 </p>
 
-<form class="flexcol">
+<div class="flexcol">
   {{#if canCustomizeMapping}}
-    <div>
-      <fieldset>
-        <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
-        <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
+    <fieldset>
+      <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
+      <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
 
-        {{#if actorMapping}}
+      {{#if actorMapping}}
+        {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
+      {{/if}}
+
+      {{#if adventureMapping}}
+        {{> "templates/generic/tab-navigation.hbs" tabs=tabs}}
+
+        <div class="tab{{#if tabs.actor.active}} active{{/if}}" data-group="mapping" data-tab="actor">
           {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
-        {{/if}}
-
-        {{#if adventureMapping}}
-          <nav class="sheet-tabs tabs" data-group="primary">
-            <a class="item" data-tab="actor">{{localize "BTFG.CompendiumExporter.ActorMapping"}}</a>
-            <a class="item" data-tab="item">{{localize "BTFG.CompendiumExporter.ItemMapping"}}</a>
-          </nav>
-
-          <section class="sheet-body">
-            <div class="tab" data-group="primary" data-tab="actor">
-              {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
-            </div>
-            <div class="tab" data-group="primary" data-tab="item">
-              {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
-            </div>
-          </section>
-        {{/if}}
-
-        {{#if itemMapping}}
+        </div>
+        <div class="tab{{#if tabs.item.active}} active{{/if}}" data-group="mapping" data-tab="item">
           {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
-        {{/if}}
-      </fieldset>
-    </div>
+        </div>
+      {{/if}}
+
+      {{#if itemMapping}}
+        {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
+      {{/if}}
+    </fieldset>
   {{/if}}
+
   <div class="form-group">
     <label for="existingFile">{{localize "BTFG.CompendiumExporter.UseExistingFile"}}</label>
     <input type="file" id="existingFile" name="existingFile" accept=".json" />
@@ -57,28 +51,17 @@
         </p>
       </div>
     {{/if}}
-    <p class="notes">{{localize "BTFG.CompendiumExporter.UseExistingFileHint"}}</p>
+    <p class="hint">{{localize "BTFG.CompendiumExporter.UseExistingFileHint"}}</p>
   </div>
-  <div class="form-group">
-    <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
-    <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked object.sortEntries}} />
-  </div>
-  <div class="form-group">
-    <label for="useIdAsKey">{{localize "BTFG.CompendiumExporter.UseIdAsKey"}}</label>
-    <input type="checkbox" value="1" id="useIdAsKey" name="useIdAsKey" {{checked object.useIdAsKey}} />
-  </div>
-  <div class="form-group">
-    <label for="generateModule">{{localize "BTFG.CompendiumExporter.GenerateModule"}}</label>
-    <input type="checkbox" value="1" id="generateModule" name="generateModule" {{checked object.generateModule}} />
-  </div>
+
+  {{formGroup fields.sortEntries rootId=rootId value=object.sortEntries localize=true}}
+  {{formGroup fields.useIdAsKey rootId=rootId value=object.useIdAsKey localize=true}}
+  {{formGroup fields.generateModule rootId=rootId value=object.generateModule localize=true}}
+
   {{#if object.generateModule}}
-    <div class="form-group">
-      <label for="translationLocale">{{localize "BTFG.CompendiumExporter.TranslationLocale"}}</label>
-      <select id="translationLocale" name="translationLocale">
-        {{selectOptions availableLocales selected=object.translationLocale}}
-      </select>
-    </div>
+    {{formGroup fields.translationLocale rootId=rootId value=object.translationLocale localize=true}}
   {{/if}}
+
   <footer class="footer flexrow">
     <button type="button" data-action="export">
       <i class="fa fa-check"></i> {{localize "BTFG.CompendiumExporter.GenerateFile"}}
@@ -87,4 +70,4 @@
       <i class="fa fa-cancel"></i> {{localize "BTFG.CompendiumChooser.CancelSelection"}}
     </button>
   </footer>
-</form>
+</div>

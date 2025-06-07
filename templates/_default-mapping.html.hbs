@@ -1,13 +1,13 @@
 {{#each mapping}}
-  <div class="form-group-stacked flexrow">
-    <div class="flexrow mapping-fields">
-      <input type="text" value="{{this.key}}" name="customMapping.{{../type}}.{{@index}}.key" placeholder="customKey" />
-      <input type="text" value="{{this.value}}" name="customMapping.{{../type}}.{{@index}}.value"
-             placeholder="system.subData.customKey" />
-      <button type="button" data-action="removeMapping" data-type="{{../type}}" data-index="{{@index}}">
-        <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.RemoveCustomMapping"}}
-      </button>
-    </div>
+  <div class="flexrow mapping-fields">
+    <input type="hidden" value="{{this.id}}" name="customMapping.{{../type}}.{{@index}}.id" />
+    <input type="text" value="{{this.key}}" name="customMapping.{{../type}}.{{@index}}.key" placeholder="customKey" />
+    <input type="text" value="{{this.value}}" name="customMapping.{{../type}}.{{@index}}.value"
+           placeholder="system.subData.customKey" />
+    <button type="button" data-action="removeMapping" data-type="{{../type}}" data-id="{{this.id}}"
+            class="remove-mapping">
+      <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.RemoveCustomMapping"}}
+    </button>
   </div>
 {{/each}}
 <div class="mapping-actions">
@@ -18,7 +18,7 @@
           data-tooltip="{{localize "BTFG.CompendiumExporter.ExportCustomMapping"}}">
     <i class="fa fa-save"></i>
   </button>
-  <button type="button" class="small" data-action="importMapping"
+  <button type="button" class="small" data-import-mapping
           data-tooltip="{{localize "BTFG.CompendiumExporter.ImportCustomMapping"}}">
     <i class="fa fa-upload"></i>
   </button>

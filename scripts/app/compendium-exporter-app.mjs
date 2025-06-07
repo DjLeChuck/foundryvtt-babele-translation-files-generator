@@ -1,31 +1,23 @@
 import * as BTFG from '../const.mjs';
 import { ExporterInstanciator } from '../exporters/exporter-instanciator.mjs';
+import { CompendiumExporterDataModel } from './compendium-exporter-data-model.mjs';
 
 const { api, ux } = foundry.applications;
 
 export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.ApplicationV2) {
-  defaultExportOptions = {
-    sortEntries: false,
-    useIdAsKey: false,
-    generateModule: false,
-    translationLocale: 'en',
-    customMapping: {
-      actor: {},
-      item: {},
-    },
-  };
-  packId = null;
-  selectedFile = null;
+  /** @type {?CompendiumExporterDataModel} */
+  #object = null;
+  #selectedFile = null;
   #dragDrop;
 
   constructor(options = {}) {
     super(options);
 
-    this.object = {};
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
   static DEFAULT_OPTIONS = {
+    id: 'compendium-exporter',
     classes: [BTFG.MODULE_ID, 'compendium-exporter-app'],
     window: {
       title: 'BTFG.CompendiumExporter.Title',
@@ -39,7 +31,6 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
     actions: {
       addMapping: this.#onAddMapping,
       exportMapping: this.#onExportMapping,
-      importMapping: this.#onImportMapping,
       removeMapping: this.#onRemoveMapping,
       export: this.#onExport,
       cancel: this.#onCancel,
@@ -58,6 +49,7 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
     main: {
       template: `modules/${BTFG.MODULE_ID}/templates/compendium-exporter.html.hbs`,
       templates: [
+        'templates/generic/tab-navigation.hbs',
         `modules/${BTFG.MODULE_ID}/templates/_choose.html.hbs`,
         `modules/${BTFG.MODULE_ID}/templates/_export.html.hbs`,
         `modules/${BTFG.MODULE_ID}/templates/_default-mapping.html.hbs`,
@@ -65,36 +57,26 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
     },
   };
 
-  // static TABS = {
-  //   sheet: {
-  //     tabs: [
-  //       { id: 'jokers', group: 'sheet', label: 'HEIST.HeistSheet.Jokers.Title' },
-  //       { id: 'agency', group: 'sheet', label: 'HEIST.HeistSheet.TheAgency' },
-  //       { id: 'reconnaissance', group: 'sheet', label: 'HEIST.GamePhases.Phase2.Title' },
-  //       { id: 'planning', group: 'sheet', label: 'HEIST.GamePhases.Phase3.Title' },
-  //       { id: 'progression', group: 'sheet', label: 'HEIST.GamePhases.Phase5.Title' },
-  //     ],
-  //     initial: 'agency',
-  //   },
-  // };
-
-  // static get defaultOptions() {
-  //   return foundry.utils.mergeObject(super.defaultOptions, {
-  //     id: 'compendium-exporter', // @todo Useless ?
-  //     tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'actor' }], // @todo À refaire
-  //   });
-  // }
+  static TABS = {
+    mapping: {
+      tabs: [
+        { id: 'actor', label: 'BTFG.CompendiumExporter.ActorMapping' },
+        { id: 'item', label: 'BTFG.CompendiumExporter.ItemMapping' },
+      ],
+      initial: 'actor',
+    },
+  };
 
   selectPack() {
-    this.packId = null;
-    this.object = foundry.utils.duplicate(this.defaultExportOptions);
+    this.#object = new CompendiumExporterDataModel();
 
     this.render(true);
   }
 
   exportPack(packId) {
-    this.packId = packId;
-    this.object = foundry.utils.duplicate(this.defaultExportOptions);
+    this.#object = new CompendiumExporterDataModel({
+      packId,
+    });
 
     this.#loadPackMapping();
 
@@ -105,20 +87,20 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
-    if (this.packId) {
+    if (this.#object?.packId) {
       context.pack = this.#getPack();
       context.actorMapping = 'Actor' === context.pack.metadata.type;
       context.adventureMapping = 'Adventure' === context.pack.metadata.type;
       context.itemMapping = 'Item' === context.pack.metadata.type;
       context.canCustomizeMapping = context.actorMapping || context.adventureMapping || context.itemMapping;
-      context.selectedFileName = this.selectedFile?.name;
-      context.object = this.object;
-    }
+      context.selectedFileName = this.#selectedFile?.name;
+      context.object = this.#object;
+      context.fields = this.#object.schema.fields;
+      context.rootId = this.id;
 
-    if (foundry.utils.isNewerVersion(game.version, 12)) {
-      context.availableLocales = game.settings.settings.get('core.language').type.choices;
-    } else {
-      context.availableLocales = game.settings.settings.get('core.language').choices;
+      if (context.adventureMapping) {
+        context.tabs = this._prepareTabs('mapping');
+      }
     }
 
     context.babeleActive = game?.babele?.initialized;
@@ -130,16 +112,7 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
     super._onRender(context, options);
 
     this.#dragDrop.forEach((d) => d.bind(this.element));
-  }
-
-  async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
-    if (event.currentTarget?.files && event.currentTarget.files[0] && 'existingFile' === event.currentTarget.id) {
-      this.selectedFile = event.currentTarget.files[0];
-
-      await this.#loadFileMapping();
-    }
-
-    await super._onSubmit(event, { updateData, preventClose, preventRender });
+    this.element.querySelector('[data-import-mapping]')?.addEventListener('click', this.#onImportMapping.bind(this));
   }
 
   _onDrop(e) {
@@ -165,33 +138,30 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
   }
 
   static async #formHandler(event, form, formData) {
-    console.warn(event, form, formData);
-  }
+    const submitData = foundry.utils.expandObject(formData.object);
+    this.#object.updateSource(submitData);
 
-  static async #onAddMapping(e) {
-    const { target: { dataset: { type } } } = e;
+    if (event.target?.files && event.target.files[0] && 'existingFile' === event.target.id) {
+      this.#selectedFile = event.target.files[0];
 
-    this.#addCustomMappingEntry(type, { key: '', value: '' });
+      await this.#loadFileMapping();
+    }
 
     await this.#savePackMapping();
 
     this.render();
   }
 
-  static async #onRemoveMapping(e) {
-    const { target: { dataset: { type, index } } } = e;
+  static async #onAddMapping(e, btn) {
+    this.#object.addCustomMapping(btn.dataset.type);
 
-    delete this.object.customMapping[type][index];
+    await this.#savePackMapping();
 
-    // Re-index
-    const newMapping = {};
-    const arrayMapping = Object.values(this.object.customMapping[type]);
+    this.render();
+  }
 
-    for (let i = 0; i < arrayMapping.length; i++) {
-      newMapping[i] = arrayMapping[i];
-    }
-
-    this.object.customMapping[type] = newMapping;
+  static async #onRemoveMapping(e, btn) {
+    this.#object.removeCustomMapping(btn.dataset.type, btn.dataset.id);
 
     await this.#savePackMapping();
 
@@ -199,66 +169,57 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
   }
 
   static async #onExportMapping() {
-    const data = this.object.customMapping;
+    const data = this.#object.customMapping;
     const pack = this.#getPack();
     const filename = `custom-mapping-${pack.metadata.label}.json`;
 
-    saveDataToFile(JSON.stringify(data, null, 2), 'text/json', filename);
-  }
-
-  static async #onImportMapping(html) {
-    const input = html.find('#import-custom-mapping-input');
-    input.off('change', this.#overrideCustomMapping.bind(this));
-    input.on('change', this.#overrideCustomMapping.bind(this));
-
-    input.click();
+    foundry.utils.saveDataToFile(JSON.stringify(data, null, 2), 'text/json', filename);
   }
 
   static async #onExport() {
     const pack = this.#getPack();
     if (null !== pack) {
-      const exporter = ExporterInstanciator.createForPack(pack, this.object, this.selectedFile);
+      const exporter = ExporterInstanciator.createForPack(pack, this.#object, this.#selectedFile);
 
       await exporter.export();
     }
   }
 
   static async #onCancel() {
-    this.packId = null;
-    this.object = foundry.utils.duplicate(this.defaultExportOptions);
+    this.#object = null;
 
     this.render();
   }
 
   static async #onUnselectFile() {
-    this.selectedFile = null;
+    this.#selectedFile = null;
 
     this.render();
   }
 
-  async _updateObject(e, formData) {
-    this.object = foundry.utils.mergeObject(this.object, foundry.utils.expandObject(formData));
+  async #onImportMapping(e) {
+    const input = e.target.form.querySelector('#import-custom-mapping-input');
+    input.removeEventListener('change', this.#overrideCustomMapping.bind(this));
+    input.addEventListener('change', this.#overrideCustomMapping.bind(this));
 
-    await this.#savePackMapping();
-
-    this.render();
+    input.click();
   }
 
   /**
-   * @returns {foundry.documents.collections.CompendiumCollection|null}
+   * @returns {CompendiumCollection|null}
    * @private
    */
   #getPack() {
-    if (!this.packId) {
+    if (!this.#object?.packId) {
       ui.notifications.error(game.i18n.localize('BTFG.CompendiumExporter.NoCompendiumId'));
 
       return null;
     }
 
-    const pack = game.packs.get(this.packId);
+    const pack = game.packs.get(this.#object.packId);
     if (!pack) {
       ui.notifications.error(game.i18n.format('BTFG.CompendiumExporter.CompendiumNotFound', {
-        id: this.packId,
+        id: this.#object.packId,
       }));
 
       return null;
@@ -269,22 +230,24 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
 
   #loadPackMapping() {
     const packsMappings = game.settings.get(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING);
-    this.object.customMapping = packsMappings[this.packId.replace('.', '-')] ?? {
-      actor: {},
-      item: {},
-    };
+    this.#object.updateSource({
+      customMapping: packsMappings[this.#object.packId.replace('.', '-')] ?? {
+        actor: {},
+        item: {},
+      },
+    });
   }
 
   async #savePackMapping() {
     const savedMapping = game.settings.get(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING);
-    savedMapping[this.packId.replace('.', '-')] = this.object.customMapping;
+    savedMapping[this.#object.packId.replace('.', '-')] = this.#object.customMapping.toJSON();
 
     await game.settings.set(BTFG.MODULE_ID, BTFG.PACK_MAPPING_SETTING, savedMapping);
   }
 
   async #loadFileMapping() {
     try {
-      const jsonString = await readTextFromFile(this.selectedFile);
+      const jsonString = await foundry.utils.readTextFromFile(this.#selectedFile);
       const json = JSON.parse(jsonString);
 
       if (!json?.mapping) {
@@ -293,30 +256,22 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
 
       if (json.mapping?.actors) {
         for (const [key, value] of Object.entries(json.mapping.actors)) {
-          this.#addCustomMappingEntry('actor', { key, value });
+          this.#object.addCustomMapping('actor', { key, value });
         }
       }
 
       if (json.mapping?.items) {
         for (const [key, value] of Object.entries(json.mapping.items)) {
-          this.#addCustomMappingEntry('item', { key, value });
+          this.#object.addCustomMapping('item', { key, value });
         }
       }
-
-      await this.#savePackMapping();
-
-      this.render();
     } catch (err) {
       ui.notifications.error(game.i18n.format('BTFG.Errors.CanNotReadFile', {
-        name: this.selectedFile.name,
+        name: this.#selectedFile.name,
       }));
 
       console.error(err);
     }
-  }
-
-  #addCustomMappingEntry(type, entry) {
-    this.object.customMapping[type][Object.keys(this.object.customMapping[type]).length] = entry;
   }
 
   async #overrideCustomMapping(e) {
@@ -329,20 +284,10 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
     const file = e.currentTarget.files[0];
 
     try {
-      const jsonString = await readTextFromFile(file);
+      const jsonString = await foundry.utils.readTextFromFile(file);
       const json = JSON.parse(jsonString);
 
-      if (json?.actor) {
-        for (const { key, value } of Object.values(json.actor)) {
-          this.#addCustomMappingEntry('actor', { key, value });
-        }
-      }
-
-      if (json?.item) {
-        for (const { key, value } of Object.values(json.item)) {
-          this.#addCustomMappingEntry('item', { key, value });
-        }
-      }
+      this.#object.updateSource({ customMapping: json });
 
       await this.#savePackMapping();
 

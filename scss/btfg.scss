@@ -34,8 +34,20 @@
     padding: 5px 0;
   }
 
+  .form-fields {
+    flex: 1;
+  }
+
+  fieldset {
+    margin-bottom: 10px;
+  }
+
   .mapping-fields {
     gap: var(--gap-size);
+
+    .remove-mapping {
+      flex: 0;
+    }
   }
 
   .mapping-actions {
@@ -52,6 +64,7 @@
   }
 
   .footer {
+    margin-top: 10px;
     gap: var(--gap-size);
   }
 
