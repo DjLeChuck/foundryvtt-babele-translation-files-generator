@@ -3,7 +3,7 @@
   "BTFG.CompendiumChooser.NotCompendium": "You can only drop a compendium.",
   "BTFG.CompendiumChooser.ProcessSelection": "Process selection",
   "BTFG.CompendiumChooser.CancelSelection": "Cancel selection",
-  "BTFG.CompendiumChooser.Explaination": "Choose the compendium to process by droping it from the compendium list to the area below.",
+  "BTFG.CompendiumChooser.Explanation": "Choose the compendium to process by dropping it from the compendium list to the area below.",
   "BTFG.CompendiumChooser.DropHere": "Drop your compendium in this area",
   "BTFG.CompendiumExporter.Title": "Compendium exporter",
   "BTFG.CompendiumExporter.WarnBabeleActive": "Please note, the export must not be launched on a compendium that has been translated by Babele because the source data is no longer all accessible once it has been initialized.",

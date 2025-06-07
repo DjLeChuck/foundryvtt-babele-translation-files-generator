@@ -3,7 +3,7 @@
   "BTFG.CompendiumChooser.NotCompendium": "Vous ne pouvez déposer que des compendiums.",
   "BTFG.CompendiumChooser.ProcessSelection": "Traiter la sélection",
   "BTFG.CompendiumChooser.CancelSelection": "Annuler la sélection",
-  "BTFG.CompendiumChooser.Explaination": "Choisissez le compendium à traiter en le déposant depuis la liste des compendiums dans la zone ci-dessous.",
+  "BTFG.CompendiumChooser.Explanation": "Choisissez le compendium à traiter en le déposant depuis la liste des compendiums dans la zone ci-dessous.",
   "BTFG.CompendiumChooser.DropHere": "Déposer le compendium dans cette zone",
   "BTFG.CompendiumExporter.Title": "Exporteur de compendium",
   "BTFG.CompendiumExporter.WarnBabeleActive": "Attention, l’export ne doit pas être lancé sur un compendium qui a été traduit par Babele car les données sources ne sont plus toutes accessible une fois qu’il a été initialisé.",

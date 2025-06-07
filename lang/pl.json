@@ -3,7 +3,7 @@
   "BTFG.CompendiumChooser.NotCompendium": "Możesz upuścić tylko kompendium.",
   "BTFG.CompendiumChooser.ProcessSelection": "Przetwarzanie wyboru",
   "BTFG.CompendiumChooser.CancelSelection": "Anuluj wybór",
-  "BTFG.CompendiumChooser.Explaination": "Wybierz kompendium do przetworzenia, upuszczając je z listy kompendiów do obszaru poniżej.",
+  "BTFG.CompendiumChooser.Explanation": "Wybierz kompendium do przetworzenia, upuszczając je z listy kompendiów do obszaru poniżej.",
   "BTFG.CompendiumChooser.DropHere": "Umieść swoje kompendium na tym obszarze",
   "BTFG.CompendiumExporter.Title": "Eksporter kompendium",
   "BTFG.CompendiumExporter.WarnBabeleActive": "Należy pamiętać, że eksportu nie można uruchamiać na kompendium, które zostało przetłumaczone przez Babele, ponieważ dane źródłowe nie są już dostępne po zainicjowaniu.",
