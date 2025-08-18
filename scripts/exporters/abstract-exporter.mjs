@@ -130,7 +130,7 @@ export class AbstractExporter {
     const flattenDocument = foundry.utils.flattenObject(indexDocument);
 
     Object.values(customMapping).forEach(({ key, value }) => {
-      if (flattenDocument.hasOwnProperty(value)) {
+      if (flattenDocument.hasOwnProperty(value) &&  flattenDocument[value] !== "") {
         documentData[key] = flattenDocument[value];
       }
     });
