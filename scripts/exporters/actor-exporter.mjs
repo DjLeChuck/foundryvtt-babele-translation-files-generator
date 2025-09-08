@@ -1,7 +1,7 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
 
 export class ActorExporter extends AbstractExporter {
-  static getDocumentData(indexDocument, document, customMapping) {
+  static getDocumentData(indexDocument, document, customMapping, itemsMapping, useIdKey) {
     const { name, prototypeToken: { name: tokenName } = {} } = indexDocument;
     const documentData = { name, tokenName: tokenName ?? name };
 
