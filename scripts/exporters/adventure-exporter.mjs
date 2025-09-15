@@ -70,6 +70,8 @@ export class AdventureExporter extends AbstractExporter {
             document,
             document,
             this.options.customMapping.actor,
+            this.options.customMapping.item,
+            this.options.useIdAsKey
           ),
           (this.existingContent[avPack.name]?.actors ?? {})[key] ?? {},
         );
