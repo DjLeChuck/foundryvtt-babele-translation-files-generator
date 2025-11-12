@@ -9,6 +9,12 @@ export class JournalEntryExporter extends AbstractExporter {
     const { name } = indexDocument;
     const documentData = { name };
 
+    if (this._notEmpty(document.categories)) {
+      documentData.categories = Object.fromEntries(
+        document.categories.map((c) => [c.name, c.name]),
+      );
+    }
+
     if (this._notEmpty(document.pages)) {
       documentData.pages = {};
 
