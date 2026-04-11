@@ -6,6 +6,11 @@
 
 - Export journal entry categories name
 - Export scenes "navName", levels name, regions name and behaviors name
+- Export rolltable results name, img and weight
+
+### Changed
+
+- Renamed rolltable results text to description
 
 [13.1.0] - 2025-10-08
 
