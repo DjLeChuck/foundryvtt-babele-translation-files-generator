@@ -27,7 +27,7 @@
   "BTFG.CompendiumExporter.GenerateFile": "Générer le fichier de traduction",
   "BTFG.CompendiumExporter.UseIdAsKey": "Utiliser l’id comme clef d’élément",
   "BTFG.CompendiumExporter.ExcludeEmptyString": "Ne pas exporter les chaînes vides",
-  "BTFG.ExporterInstantiator.InvalidCompendium": "Impossible de créer un exporteur pour le compendium {label}",
+  "BTFG.ExporterManager.InvalidCompendium": "Impossible de créer un exporteur pour le compendium {label}",
   "BTFG.Exporter.PleaseWait": "Traitement du compendium {label}. Merci de patienter, cela peut prendre un moment selon les données présentes à l’intérieur.",
   "BTFG.Exporter.ExportRunning": "Export en cours...",
   "BTFG.Exporter.ExportFinished": "Export terminé !",

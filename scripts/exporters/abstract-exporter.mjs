@@ -8,16 +8,15 @@ const MODULE_TPL_ID = 'your-module-id';
  * @typedef {import('../app/compendium-exporter-data-model.mjs').ExporterOptions} ExporterOptions
  */
 export class AbstractExporter {
-  /** @type {ExporterOptions} */
-  options;
+  /** @type {import('./exporter-manager.mjs').ExporterManager} */
+  #manager;
+
   dataset = {
     label: '',
     mapping: {},
     folders: {},
     entries: {},
   };
-  /** @type {CompendiumCollection} */
-  pack;
 
   _progress;
   progressNbImported;
@@ -25,24 +24,45 @@ export class AbstractExporter {
   progressTotalElements;
 
   /**
-   * @param {CompendiumCollection} pack
-   * @param {ExporterOptions} options
-   * @param existingFile
+   * @param {import('./exporter-manager.mjs').ExporterManager} manager
    */
-  constructor(pack, options, existingFile) {
+  constructor(manager) {
     if (this.constructor === AbstractExporter) {
       throw new TypeError('Abstract class "AbstractExporter" cannot be instantiated directly');
     }
 
-    this.options = options;
-    this.pack = pack;
-    this.existingFile = existingFile;
+    this.#manager = manager;
     this.existingContent = {};
     this.existingFolders = {};
-    this.dataset.label = pack.metadata.label;
+    this.dataset.label = manager.pack.metadata.label;
     this.progressNbImported = 0;
     this.progressMessage = game.i18n.localize('BTFG.Exporter.ExportRunning');
-    this.progressTotalElements = pack.index.size;
+    this.progressTotalElements = manager.pack.index.size;
+  }
+
+  /** @returns {CompendiumCollection} */
+  get pack() {
+    return this.#manager.pack;
+  }
+
+  /** @returns {ExporterOptions} */
+  get options() {
+    return this.#manager.options;
+  }
+
+  /** @returns {File|null} */
+  get existingFile() {
+    return this.#manager.existingFile;
+  }
+
+  /**
+   * Returns the exporter instance for the given type.
+   *
+   * @param {string} type
+   * @returns {AbstractExporter}
+   */
+  getExporter(type) {
+    return this.#manager.getExporter(type);
   }
 
   async export() {

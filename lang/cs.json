@@ -27,7 +27,7 @@
   "BTFG.CompendiumExporter.GenerateFile": "Vygenerovat překladový soubor",
   "BTFG.CompendiumExporter.UseIdAsKey": "Použít ID jako klíč položky",
   "BTFG.CompendiumExporter.ExcludeEmptyString": "Neexportujte prázdné řetězce",
-  "BTFG.ExporterInstantiator.InvalidCompendium": "Pro kompendium {label} nelze vytvořit export.",
+  "BTFG.ExporterManager.InvalidCompendium": "Pro kompendium {label} nelze vytvořit export.",
   "BTFG.Exporter.PleaseWait": "Zpracovávám kompendium {label}. Prosíme o trpělivost, může to chvíli trvat v závislosti na množství dat.",
   "BTFG.Exporter.ExportRunning": "Probíhá export...",
   "BTFG.Exporter.ExportFinished": "Export dokončen!",

@@ -27,7 +27,7 @@
   "BTFG.CompendiumExporter.GenerateFile": "Wygeneruj plik tłumaczenia",
   "BTFG.CompendiumExporter.UseIdAsKey": "Użyj identyfikatora jako klucza wejściowego",
   "BTFG.CompendiumExporter.ExcludeEmptyString": "Nie eksportuj pustych ciągów znaków",
-  "BTFG.ExporterInstantiator.InvalidCompendium": "Nie można utworzyć eksportera dla kompendium {label}",
+  "BTFG.ExporterManager.InvalidCompendium": "Nie można utworzyć eksportera dla kompendium {label}",
   "BTFG.Exporter.PleaseWait": "Przetwarzanie kompendium {label}. Prosimy o cierpliwość, może to trochę potrwać w zależności od danych znajdujących się w kompendium.",
   "BTFG.Exporter.ExportRunning": "Eksport w toku...",
   "BTFG.Exporter.ExportFinished": "Eksport zakończony!",

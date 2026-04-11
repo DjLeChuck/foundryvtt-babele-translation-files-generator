@@ -1,21 +1,6 @@
 import { AbstractExporter } from './abstract-exporter.mjs';
-import { EXPORTERS } from './exporter-instantiator.mjs';
 
 export class AdventureExporter extends AbstractExporter {
-  #exporters = {};
-
-  constructor(pack, options, existingFile) {
-    super(pack, options, existingFile);
-
-    for (const [key, Exporter] of Object.entries(EXPORTERS)) {
-      if ('Adventure' === key) {
-        continue;
-      }
-
-      this.#exporters[key] = new Exporter(this.pack, this.options, this.existingContent);
-    }
-  }
-
   /**
    * @param {Object} indexDocument
    * @param {AdventureData} document
@@ -56,7 +41,7 @@ export class AdventureExporter extends AbstractExporter {
       };
 
       // Scenes
-      exporter = this.#exporters['Scene'];
+      exporter = this.getExporter('Scene');
       for (const document of avPack.scenes) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].scenes[key] = foundry.utils.mergeObject(
@@ -68,7 +53,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Macros
-      exporter = this.#exporters['Macro'];
+      exporter = this.getExporter('Macro');
       for (const document of avPack.macros) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].macros[key] = foundry.utils.mergeObject(
@@ -80,7 +65,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Playlists
-      exporter = this.#exporters['Playlist'];
+      exporter = this.getExporter('Playlist');
       for (const document of avPack.playlists) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].playlists[key] = foundry.utils.mergeObject(
@@ -92,7 +77,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Actors
-      exporter = this.#exporters['Actor'];
+      exporter = this.getExporter('Actor');
       for (const document of avPack.actors) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].actors[key] = foundry.utils.mergeObject(
@@ -104,7 +89,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Items
-      exporter = this.#exporters['Item'];
+      exporter = this.getExporter('Item');
       for (const document of avPack.items) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].items[key] = foundry.utils.mergeObject(
@@ -116,7 +101,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Tables
-      exporter = this.#exporters['RollTable'];
+      exporter = this.getExporter('RollTable');
       for (const document of avPack.tables) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].tables[key] = foundry.utils.mergeObject(
@@ -135,7 +120,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Journals
-      exporter = this.#exporters['JournalEntry'];
+      exporter = this.getExporter('JournalEntry');
       for (const document of avPack.journal) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].journals[key] = foundry.utils.mergeObject(
@@ -147,7 +132,7 @@ export class AdventureExporter extends AbstractExporter {
       }
 
       // Cards
-      exporter = this.#exporters['Cards'];
+      exporter = this.getExporter('Cards');
       for (const document of avPack.cards) {
         const key = this._getExportKey(document);
         this.dataset.entries[avPack.name].cards[key] = foundry.utils.mergeObject(
