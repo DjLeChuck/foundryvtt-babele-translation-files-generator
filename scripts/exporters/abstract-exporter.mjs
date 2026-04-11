@@ -213,7 +213,7 @@ export class AbstractExporter {
       const readme = await fetch(`${MODULE_TPL_BASE_URI}/README.md`);
       zip.file(`${MODULE_TPL_ID}/README.md`, await readme.text());
 
-      const module = await fetch(`${MODULE_TPL_BASE_URI}/module.json`);
+      const module = await fetch(`${MODULE_TPL_BASE_URI}/_module.json`);
       zip.file(`${MODULE_TPL_ID}/module.json`, await module.text());
 
       const register = await fetch(`${MODULE_TPL_BASE_URI}/register.js`);

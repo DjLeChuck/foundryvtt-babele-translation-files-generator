@@ -12,6 +12,10 @@
 
 - Renamed rolltable results text to description
 
+### Fixed
+
+- Rename module template "module.json" in order to prevent misfunction with The Forge bazaar
+
 [13.1.0] - 2025-10-08
 
 ### Added
