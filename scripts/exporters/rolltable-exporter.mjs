@@ -10,13 +10,19 @@ export class RollTableExporter extends AbstractExporter {
     const documentData = { name, description };
 
     if (this._notEmpty(document.results)) {
-      documentData.results = {};
+        documentData.results = {};
+        for (const result of document.results) {
+            const { range, name, description: resultDesc } = result; 
+            const rangeKey = `${range[0]}-${range[1]}`;
 
-      for (const { range, text } of document.results) {
-        documentData.results[`${range[0]}-${range[1]}`] = text;
-      }
+            const resultData = { name };
+
+            if (resultDesc !== undefined && resultDesc !== '') {
+                resultData.description = resultDesc;
+            }
+
+            documentData.results[rangeKey] = resultData;
+        }
     }
-
     return documentData;
-  }
 }

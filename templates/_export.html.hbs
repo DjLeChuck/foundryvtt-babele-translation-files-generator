@@ -17,9 +17,15 @@
       <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
       <p class="notes">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
 
-      {{#if actorMapping}}
-        {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
-      {{/if}}
+  {{#if actorMapping}}
+      {{> "templates/generic/tab-navigation.hbs" tabs=tabs}}
+      <div class="tab{{#if tabs.actor.active}} active{{/if}}" data-group="mapping" data-tab="actor">
+          {{> (template "_default-mapping.html.hbs") type="actor" mapping=object.customMapping.actor}}
+      </div>
+      <div class="tab{{#if tabs.item.active}} active{{/if}}" data-group="mapping" data-tab="item">
+          {{> (template "_default-mapping.html.hbs") type="item" mapping=object.customMapping.item}}
+      </div>
+  {{/if}}
 
       {{#if adventureMapping}}
         {{> "templates/generic/tab-navigation.hbs" tabs=tabs}}

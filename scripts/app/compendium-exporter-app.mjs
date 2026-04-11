@@ -98,7 +98,7 @@ export class CompendiumExporterApp extends api.HandlebarsApplicationMixin(api.Ap
       context.fields = this.#object.schema.fields;
       context.rootId = this.id;
 
-      if (context.adventureMapping) {
+      if (context.actorMapping || context.adventureMapping) {
         context.tabs = this._prepareTabs('mapping');
       }
     }
