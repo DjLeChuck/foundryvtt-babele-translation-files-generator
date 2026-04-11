@@ -6,7 +6,7 @@
 
 - Export journal entry categories name
 - Export scenes "navName", levels name, regions name and behaviors name
-- Export rolltable results name, img and weight
+- Export rolltable results name
 - Add `BTFG.afterDocumentProcessed` hook after a document is processed
 - Add `BTFG.after[PackType]DocumentProcessed` hook after a document is processed, wher `[PackType]` is the type of the
   compendium (eg. `BTFG.afterSceneDocumentProcessed`)
