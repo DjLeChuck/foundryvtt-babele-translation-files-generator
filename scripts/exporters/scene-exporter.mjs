@@ -7,7 +7,11 @@ export class SceneExporter extends AbstractExporter {
    */
   async getDocumentData(indexDocument, document) {
     const { name, navName } = indexDocument;
-    const documentData = { name, navName };
+    const documentData = { name };
+
+    if (navName) {
+      documentData.navName = navName;
+    }
 
     if (this._notEmpty(document.drawings)) {
       documentData.drawings = {};

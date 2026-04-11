@@ -149,6 +149,9 @@ export class AbstractExporter {
 
       await this._processDocumentData(indexDocument, documentData);
 
+      Hooks.callAll('BTFG.afterDocumentProcessed', indexDocument, documentData, this.options);
+      Hooks.callAll(`BTFG.after${this.pack.metadata.type}DocumentProcessed`, indexDocument, documentData, this.options);
+
       this.dataset.entries[key] = foundry.utils.mergeObject(
         documentData,
         this.existingContent[key] ?? {},
