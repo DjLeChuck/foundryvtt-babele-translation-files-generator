@@ -60,6 +60,8 @@ export class AbstractExporter {
       this.dataset.folders = this._sortItems(this.dataset.folders);
     }
 
+    this._removeEmptyDatasetEntries();
+
     this._endProgressBar();
 
     if (this.options.generateModule) {
@@ -126,10 +128,6 @@ export class AbstractExporter {
 
         break;
     }
-
-    if (0 === Object.keys(this.dataset.mapping).length) {
-      delete this.dataset.mapping;
-    }
   }
 
   _getIndexFields() {
@@ -182,6 +180,10 @@ export class AbstractExporter {
   }
 
   _notEmpty(dataset) {
+    if (typeof dataset === 'undefined') {
+      return false;
+    }
+
     return 0 < (Array.isArray(dataset) ? dataset.length : dataset.size);
   }
 
@@ -254,5 +256,19 @@ export class AbstractExporter {
 
   _getExportKey(document) {
     return this.options.useIdAsKey ? document._id : document.name;
+  }
+
+  _removeEmptyDatasetEntries() {
+    if (0 === Object.keys(this.dataset.mapping).length) {
+      delete this.dataset.mapping;
+    }
+
+    if (0 === Object.keys(this.dataset.entries).length) {
+      delete this.dataset.entries;
+    }
+
+    if (0 === Object.keys(this.dataset.folders).length) {
+      delete this.dataset.folders;
+    }
   }
 }

@@ -6,8 +6,8 @@ export class SceneExporter extends AbstractExporter {
    * @param {SceneData} document
    */
   async getDocumentData(indexDocument, document) {
-    const { name } = indexDocument;
-    const documentData = { name };
+    const { name, navName } = indexDocument;
+    const documentData = { name, navName };
 
     if (this._notEmpty(document.drawings)) {
       documentData.drawings = {};
@@ -25,6 +25,36 @@ export class SceneExporter extends AbstractExporter {
       for (const { text } of document.notes) {
         if (text?.length) {
           documentData.notes[text] = text;
+        }
+      }
+    }
+
+    if (this._notEmpty(document.levels)) {
+      documentData.levels = {};
+
+      for (const { name } of document.levels) {
+        documentData.levels[name] = name;
+      }
+    }
+
+    if (this._notEmpty(document.regions)) {
+      documentData.regions = {};
+
+      for (const region of document.regions) {
+        documentData.regions[name] = { name };
+
+        if (this._notEmpty(region.behaviors)) {
+          documentData.regions[name].behaviors = {};
+
+          for (const behavior of region.behaviors) {
+            documentData.regions[name].behaviors[behavior.name] = {
+              name: behavior.name,
+            };
+
+            if (behavior.system.text) {
+              documentData.regions[name].behaviors[behavior.name].text = behavior.system.text;
+            }
+          }
         }
       }
     }

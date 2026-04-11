@@ -5,6 +5,7 @@
 ### Added
 
 - Export journal entry categories name
+- Export scenes "navName", levels name, regions name and behaviors name
 
 [13.1.0] - 2025-10-08
 
