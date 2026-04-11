@@ -18,36 +18,16 @@ export class JournalEntryExporter extends AbstractExporter {
     if (this._notEmpty(document.pages)) {
       documentData.pages = {};
 
-      for (const {
-        name,
-        image: { caption } = {},
-        src,
-        video: { width, height } = {},
-        text: { content: text } = {}
-      } of document.pages) {
-        const pageData = { name };
+      for (const page of document.pages) {
+        const pageData = { name: page.name };
 
-        if (caption) {
-          pageData.caption = caption;
-        }
+        this._addIfDefined(page, pageData, 'caption', 'img.caption');
+        this._addIfDefined(page, pageData, 'src');
+        this._addIfDefined(page, pageData, 'width', 'video.width');
+        this._addIfDefined(page, pageData, 'height', 'video.height');
+        this._addIfDefined(page, pageData, 'text', 'content.text');
 
-        if (src) {
-          pageData.src = src;
-        }
-
-        if (width) {
-          pageData.width = width;
-        }
-
-        if (height) {
-          pageData.height = height;
-        }
-
-        if (text) {
-          pageData.text = text;
-        }
-
-        documentData.pages[name] = pageData;
+        documentData.pages[page.name] = pageData;
       }
     }
 

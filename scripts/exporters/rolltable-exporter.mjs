@@ -6,23 +6,21 @@ export class RollTableExporter extends AbstractExporter {
    * @param {RollTableData} document
    */
   async getDocumentData(indexDocument, document) {
-    const { name, description } = indexDocument;
-    const documentData = { name, description };
+    const { name } = indexDocument;
+    const documentData = { name };
+
+    this._addIfDefined(indexDocument, documentData, 'description');
 
     if (this._notEmpty(document.results)) {
       documentData.results = {};
 
-      for (const { range, description, name } of document.results) {
+      for (const result of document.results) {
+        const range = result.range;
         const key = `${range[0]}-${range[1]}`;
         documentData.results[key] = {};
 
-        if (description) {
-          documentData.results[key].description = description;
-        }
-
-        if (name) {
-          documentData.results[key].name = name;
-        }
+        this._addIfDefined(result, documentData.results[key], 'description');
+        this._addIfDefined(result, documentData.results[key], 'name');
       }
     }
 

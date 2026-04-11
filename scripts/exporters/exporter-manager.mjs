@@ -79,7 +79,8 @@ export class ExporterManager {
     try {
       await this.getExporter(this.#pack.metadata.type).export();
     } catch (err) {
-      console.error(`[BTFG] Exporter creation error: ${err.toString()}`);
+      console.error('[BTFG] Exporter creation error');
+      console.error(err);
 
       ui.notifications.error(game.i18n.format('BTFG.ExporterManager.InvalidCompendium', {
         label: this.#pack.metadata.label,

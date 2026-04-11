@@ -9,9 +9,7 @@ export class SceneExporter extends AbstractExporter {
     const { name, navName } = indexDocument;
     const documentData = { name };
 
-    if (navName) {
-      documentData.navName = navName;
-    }
+    this._addIfDefined(indexDocument, documentData, 'navName');
 
     if (this._notEmpty(document.drawings)) {
       documentData.drawings = {};
@@ -27,7 +25,7 @@ export class SceneExporter extends AbstractExporter {
       documentData.notes = {};
 
       for (const { text } of document.notes) {
-        if (text?.length) {
+        if (this._notEmpty(text)) {
           documentData.notes[text] = text;
         }
       }
@@ -55,9 +53,7 @@ export class SceneExporter extends AbstractExporter {
               name: behavior.name,
             };
 
-            if (behavior.system.text) {
-              documentData.regions[name].behaviors[behavior.name].text = behavior.system.text;
-            }
+            this._addIfDefined(behavior, documentData.regions[name].behaviors[behavior.name], 'text', 'system.text');
           }
         }
       }

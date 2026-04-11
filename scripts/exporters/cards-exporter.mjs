@@ -9,14 +9,20 @@ export class CardsExporter extends AbstractExporter {
    * @param {CardsData} document
    */
   async getDocumentData(indexDocument, document) {
-    const { name, description } = indexDocument;
-    const documentData = { name, description };
+    const { name } = indexDocument;
+    const documentData = { name };
+
+    this._addIfDefined(indexDocument, documentData, 'description');
 
     if (this._notEmpty(document.cards)) {
       documentData.cards = {};
 
-      for (const { name, description, back, faces } of document.cards) {
-        documentData.cards[name] = { name, description, back, faces };
+      for (const card of document.cards) {
+        documentData.cards[card.name] = { name: card.name };
+
+        this._addIfDefined(card, documentData.cards[card.name], 'description');
+        this._addIfDefined(card, documentData.cards[card.name], 'back');
+        this._addIfDefined(card, documentData.cards[card.name], 'faces');
       }
     }
 

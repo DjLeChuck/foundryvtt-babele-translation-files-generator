@@ -169,8 +169,8 @@ export class AbstractExporter {
 
       await this._processDocumentData(indexDocument, documentData);
 
-      Hooks.callAll('BTFG.afterDocumentProcessed', indexDocument, documentData, this.options);
-      Hooks.callAll(`BTFG.after${this.pack.metadata.type}DocumentProcessed`, indexDocument, documentData, this.options);
+      Hooks.callAll('BTFG.afterDocumentProcessed', indexDocument, documentData, this.options, this.#manager);
+      Hooks.callAll(`BTFG.after${this.pack.metadata.type}DocumentProcessed`, indexDocument, documentData, this.options, this.#manager);
 
       this.dataset.entries[key] = foundry.utils.mergeObject(
         documentData,
@@ -202,12 +202,32 @@ export class AbstractExporter {
     });
   }
 
-  _notEmpty(dataset) {
-    if (typeof dataset === 'undefined') {
+  _notEmpty(value) {
+    if (typeof value === 'undefined' || value === null) {
       return false;
     }
 
-    return 0 < (Array.isArray(dataset) ? dataset.length : dataset.size);
+    if (typeof value === 'string') {
+      return 0 < value.length;
+    }
+
+    if (value.size !== undefined) {
+      return 0 < value.size;
+    }
+
+    if (typeof value === 'object') {
+      return 0 < Object.keys(value).length;
+    }
+
+    return 0 < (Array.isArray(value) ? value.length : value);
+  }
+
+  _addIfDefined(document, data, key, sourceKey = null) {
+    const value = foundry.utils.getProperty(document, sourceKey || key);
+
+    if (this._notEmpty(value)) {
+      data[key] = value;
+    }
   }
 
   _getStringifiedDataset() {
