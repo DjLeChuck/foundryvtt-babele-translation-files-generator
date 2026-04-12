@@ -8,8 +8,12 @@
 - Export scenes "navName", levels name, regions name and behaviors name
 - Export rolltable results name
 - Add `BTFG.afterDocumentProcessed` hook after a document is processed
-- Add `BTFG.after[PackType]DocumentProcessed` hook after a document is processed, wher `[PackType]` is the type of the
+- Add `BTFG.after[PackType]DocumentProcessed` hook after a document is processed, where `[PackType]` is the type of the
   compendium (eg. `BTFG.afterSceneDocumentProcessed`)
+- Add `BTFG.afterActor[ActorType]DocumentProcessed` hook after a document is processed, where `[ActorType]` is the type
+  of the actor (eg. `BTFG.afterActorNpcDocumentProcessed`)
+- Add `BTFG.afterActor[ItemType]DocumentProcessed` hook after a document is processed, where `[ItemType]` is the type
+  of the item (eg. `BTFG.afterItemSpellDocumentProcessed`)
 
 ### Changed
 
