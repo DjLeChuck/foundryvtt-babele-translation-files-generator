@@ -154,9 +154,6 @@ export class AbstractExporter {
     return [];
   }
 
-  async _processDocumentData(indexDocument, documentData) {
-  }
-
   async _processDataset() {
     const documents = await this.pack.getIndex({ fields: this._getIndexFields() });
 
@@ -167,16 +164,7 @@ export class AbstractExporter {
         await this.pack.getDocument(indexDocument._id),
       );
 
-      await this._processDocumentData(indexDocument, documentData);
-
-      Hooks.callAll('BTFG.afterDocumentProcessed', indexDocument, documentData, this.options, this.#manager);
-      Hooks.callAll(`BTFG.after${this.pack.metadata.type}DocumentProcessed`, indexDocument, documentData, this.options, this.#manager);
-
-      if (['Actor', 'Item'].includes(this.pack.metadata.type)) {
-        const subType = indexDocument.type.charAt(0).toUpperCase() + indexDocument.type.slice(1);
-
-        Hooks.callAll(`BTFG.after${this.pack.metadata.type}${subType}DocumentProcessed`, indexDocument, documentData, this.options, this.#manager);
-      }
+      this._callHooks(indexDocument, documentData);
 
       this.dataset.entries[key] = foundry.utils.mergeObject(
         documentData,
@@ -184,6 +172,17 @@ export class AbstractExporter {
       );
 
       this._stepProgressBar();
+    }
+  }
+
+  _callHooks(indexDocument, documentData, type = this.pack.metadata.type) {
+    Hooks.callAll('BTFG.afterDocumentProcessed', indexDocument, documentData, this.options, this.#manager);
+    Hooks.callAll(`BTFG.after${type}DocumentProcessed`, indexDocument, documentData, this.options, this.#manager);
+
+    if (['Actor', 'Item'].includes(type)) {
+      const subType = indexDocument.type.charAt(0).toUpperCase() + indexDocument.type.slice(1);
+
+      Hooks.callAll(`BTFG.after${type}${subType}DocumentProcessed`, indexDocument, documentData, this.options, this.#manager);
     }
   }
 
